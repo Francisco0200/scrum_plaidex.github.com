@@ -1,0 +1,2354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCRUM PLADIEX HUB · TEDE Consultores 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep: #0f172a;
+    --deep2: #1e293b;
+    --deep3: #334155;
+    --cyan: #06b6d4;
+    --cyan-light: #cffafe;
+    --cyan-dim: rgba(6,182,212,0.15);
+    --green: #10b981;
+    --green-dim: rgba(16,185,129,0.12);
+    --gold: #f59e0b;
+    --gold-dim: rgba(245,158,11,0.12);
+    --red: #f43f5e;
+    --red-dim: rgba(244,63,94,0.12);
+    --bg: #f0f4fc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --border2: #cbd5e1;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --sidebar-w: 260px;
+    --topbar-h: 64px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.06);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--deep);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+  /* ══════════════════════════ LOGIN ══════════════════════════ */
+  #login-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--deep);
+    display: flex; align-items: center; justify-content: center;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 70% 0%, rgba(6,182,212,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 100%, rgba(16,185,129,0.12) 0%, transparent 50%);
+  }
+  .login-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 32px;
+  }
+  .login-logo {
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.15em;
+    color: var(--cyan); text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .login-logo span {
+    display: inline-block; width: 10px; height: 10px;
+    background: var(--green); border-radius: 50%; animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .login-card {
+    background: var(--deep2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 48px 44px;
+    width: 420px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+  }
+  .login-title {
+    font-size: 2rem; font-weight: 900; color: white; letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+  .login-sub { color: var(--text-dim); font-size: 0.82rem; margin-bottom: 36px; }
+  .login-label {
+    display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
+  }
+  /* user cards en login */
+  .login-user-grid {
+    display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px;
+  }
+  .user-card-btn {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 14px; border-radius: var(--radius); border: 1.5px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03); cursor: pointer; transition: 0.18s;
+    font-family: 'DM Sans', sans-serif; text-align: left; width: 100%;
+  }
+  .user-card-btn:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+  .user-card-btn.sel { border-color: var(--cyan); background: var(--cyan-dim); box-shadow: 0 0 0 1px var(--cyan); }
+  .uca { /* avatar */
+    width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 800; color: var(--deep);
+  }
+  .uca-po   { background: linear-gradient(135deg, #06b6d4, #0e7490); color: white; }
+  .uca-sm   { background: linear-gradient(135deg, #f59e0b, #d97706); color: var(--deep); }
+  .uca-dev  { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; }
+  .uca-dis  { background: linear-gradient(135deg, #ec4899, #db2777); color: white; }
+  .uca-med  { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+  .ucn { font-size: 0.85rem; font-weight: 700; color: white; line-height: 1.2; }
+  .ucr { font-size: 0.65rem; color: var(--text-dim); margin-top: 2px; font-weight: 500; }
+
+  .login-input {
+    width: 100%; padding: 13px 16px; border-radius: var(--radius-sm);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04); color: white;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    margin-bottom: 14px; outline: none; transition: 0.2s;
+  }
+  .login-input:focus { border-color: var(--cyan); background: rgba(6,182,212,0.06); }
+  .login-input::placeholder { color: var(--text-dim); }
+
+  .login-btn {
+    width: 100%; padding: 14px; border-radius: var(--radius-sm);
+    background: var(--cyan); color: var(--deep); font-weight: 800; font-size: 0.9rem;
+    border: none; cursor: pointer; transition: 0.2s; letter-spacing: 0.02em;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .login-btn:hover { background: #22d3ee; transform: translateY(-1px); }
+
+  /* ══════════════════════════ LAYOUT ══════════════════════════ */
+  #app { display: flex; width: 100%; height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w); height: 100vh;
+    background: var(--deep); display: flex; flex-direction: column;
+    flex-shrink: 0; overflow: hidden;
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+  .sb-brand {
+    padding: 20px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sb-logo {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--cyan), var(--green));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 0.85rem; color: var(--deep);
+    flex-shrink: 0;
+  }
+  .sb-brand-text { font-weight: 800; font-size: 0.9rem; color: white; line-height: 1.2; }
+  .sb-brand-sub { font-size: 0.65rem; color: var(--text-dim); font-weight: 500; }
+
+  .sb-user {
+    padding: 16px 22px; margin: 12px 12px 0;
+    background: rgba(255,255,255,0.03); border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sb-avatar {
+    width: 38px; height: 38px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--gold), #fb923c);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.82rem; color: var(--deep); flex-shrink: 0;
+  }
+  .sb-user-name { font-weight: 700; font-size: 0.82rem; color: white; }
+  .sb-user-role {
+    font-size: 0.65rem; color: var(--cyan); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  .sb-nav { flex: 1; overflow-y: auto; padding: 16px 12px; }
+  .sb-section-label {
+    font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em;
+    color: var(--deep3); text-transform: uppercase; padding: 0 10px;
+    margin: 16px 0 6px;
+  }
+  .sb-section-label:first-child { margin-top: 0; }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    color: var(--text-dim); font-weight: 600; font-size: 0.82rem;
+    cursor: pointer; transition: 0.18s; position: relative;
+    border: none; background: transparent; width: 100%; text-align: left;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.04); color: white; }
+  .nav-item.active {
+    background: var(--cyan-dim); color: var(--cyan);
+    border-left: 3px solid var(--cyan);
+  }
+  .nav-item .nav-icon { width: 18px; height: 18px; flex-shrink: 0; display:flex; align-items:center; justify-content:center; opacity:0.55; }
+  .nav-item.active .nav-icon { opacity:1; }
+  .nav-item:hover .nav-icon { opacity:0.9; }
+  .stat-icon svg { width:22px; height:22px; }
+  .nav-badge {
+    margin-left: auto; background: var(--red); color: white;
+    font-size: 0.6rem; font-weight: 800; padding: 2px 6px; border-radius: 99px;
+  }
+  .nav-badge-g {
+    margin-left: auto; background: var(--green-dim); color: var(--green);
+    font-size: 0.6rem; font-weight: 800; padding: 2px 6px; border-radius: 99px;
+  }
+
+  .sb-footer {
+    padding: 12px; border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; gap: 8px;
+  }
+  .sb-footer-btn {
+    flex: 1; padding: 9px; border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    color: var(--text-dim); cursor: pointer; font-size: 0.75rem; font-weight: 600;
+    transition: 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .sb-footer-btn:hover { color: white; background: rgba(255,255,255,0.08); }
+
+  /* ── MAIN ── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    height: var(--topbar-h); background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 28px;
+    gap: 16px; flex-shrink: 0;
+  }
+  .topbar-title { font-size: 1.05rem; font-weight: 800; color: var(--deep); }
+  .topbar-crumb { font-size: 0.78rem; color: var(--text-muted); }
+
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .topbar-sprint {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px; background: var(--cyan-dim); border-radius: 99px;
+    font-size: 0.75rem; font-weight: 700; color: var(--cyan);
+  }
+  .sprint-dot { width: 7px; height: 7px; background: var(--cyan); border-radius: 50%; animation: pulse 1.5s infinite; }
+
+  .topbar-icon-btn {
+    width: 36px; height: 36px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: white;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.2s; font-size: 1rem; position: relative;
+  }
+  .topbar-icon-btn:hover { border-color: var(--cyan); background: var(--cyan-dim); }
+  .notif-dot {
+    position: absolute; top: -3px; right: -3px;
+    width: 9px; height: 9px; background: var(--red); border-radius: 50%;
+    border: 2px solid white;
+  }
+
+  /* ── VIEWS ── */
+  .view { display: none; padding: 28px 28px 100px; overflow-y: auto; flex: 1; }
+  .view.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ══════════════════════════ CARDS & BADGES ══════════════════════════ */
+  .card {
+    background: white; border-radius: var(--radius); border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm); overflow: hidden;
+  }
+  .card-pad { padding: 20px 24px; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 99px;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .badge-cyan { background: var(--cyan-dim); color: var(--cyan); }
+  .badge-green { background: var(--green-dim); color: var(--green); }
+  .badge-gold { background: var(--gold-dim); color: #b45309; }
+  .badge-red { background: var(--red-dim); color: #e11d48; }
+  .badge-deep { background: var(--deep); color: white; }
+  .badge-must { background: #fde8ff; color: #9333ea; }
+  .badge-should { background: #e0f2fe; color: #0369a1; }
+  .badge-could { background: #f0fdf4; color: #16a34a; }
+  .badge-wont { background: #f1f5f9; color: #475569; }
+
+  /* ══════════════════════════ SECTION HEADERS ══════════════════════════ */
+  .section-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+  }
+  .section-title { font-size: 1.2rem; font-weight: 800; color: var(--deep); }
+  .section-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* ══════════════════════════ BUTTONS ══════════════════════════ */
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 9px 18px; border-radius: var(--radius-sm);
+    font-weight: 700; font-size: 0.82rem; cursor: pointer;
+    border: none; transition: 0.18s; font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--cyan); color: var(--deep); }
+  .btn-primary:hover { background: #22d3ee; transform: translateY(-1px); }
+  .btn-deep { background: var(--deep); color: white; }
+  .btn-deep:hover { background: var(--deep2); }
+  .btn-ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-red { background: var(--red-dim); color: var(--red); }
+  .btn-red:hover { background: #ffe4e6; }
+  .btn-green { background: var(--green-dim); color: var(--green); }
+  .btn-green:hover { background: #d1fae5; }
+  .btn-sm { padding: 6px 12px; font-size: 0.72rem; }
+  .btn-xs { padding: 4px 9px; font-size: 0.68rem; }
+
+  /* ══════════════════════════ STATS GRID ══════════════════════════ */
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+  @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+  .stat-card {
+    background: white; border-radius: var(--radius); border: 1px solid var(--border);
+    padding: 18px 22px; position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; bottom: -20px; right: -20px;
+    width: 80px; height: 80px; border-radius: 50%;
+    opacity: 0.08; background: var(--stat-color, var(--cyan));
+  }
+  .stat-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 12px;
+    background: var(--stat-bg, var(--cyan-dim));
+  }
+  .stat-val { font-size: 1.9rem; font-weight: 900; color: var(--deep); line-height: 1; }
+  .stat-val span { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+  .stat-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+  .stat-delta {
+    font-size: 0.72rem; font-weight: 700; margin-top: 8px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .delta-up { color: var(--green); }
+  .delta-dn { color: var(--red); }
+
+  /* ══════════════════════════ DASHBOARD ══════════════════════════ */
+  .dash-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+
+  /* Burndown chart */
+  .burndown-wrap { padding: 20px 24px; }
+  .chart-area { position: relative; height: 200px; margin-top: 16px; }
+  .chart-area canvas { width: 100% !important; height: 100% !important; }
+
+  /* Activity feed */
+  .activity-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-dot {
+    width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0;
+    background: var(--cyan);
+  }
+  .activity-text { font-size: 0.8rem; color: var(--deep); line-height: 1.4; }
+  .activity-time { font-size: 0.68rem; color: var(--text-dim); margin-top: 2px; }
+
+  /* Risk table */
+  .risk-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  .risk-table th { padding: 10px 14px; text-align: left; font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; background: #f8fafc; }
+  .risk-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  .risk-table tr:last-child td { border-bottom: none; }
+  .risk-bar { height: 5px; border-radius: 99px; background: var(--border); overflow: hidden; min-width: 80px; }
+  .risk-fill { height: 100%; border-radius: 99px; }
+
+  /* ══════════════════════════ BACKLOG ══════════════════════════ */
+  #backlog-search {
+    width: 260px; padding: 9px 14px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; outline: none; transition: 0.2s;
+  }
+  #backlog-search:focus { border-color: var(--cyan); }
+
+  .story-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px; border-bottom: 1px solid var(--border);
+    transition: 0.15s; cursor: pointer;
+  }
+  .story-row:last-child { border-bottom: none; }
+  .story-row:hover { background: #f8fafc; }
+  .story-row.sel { background: #f0f9ff; }
+  .story-check {
+    width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border2);
+    cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: 0.15s;
+  }
+  .story-row.sel .story-check { background: var(--cyan); border-color: var(--cyan); }
+  .story-pts {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700;
+    width: 28px; height: 28px; border-radius: 7px; background: var(--bg);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    border: 1.5px solid var(--border); color: var(--deep);
+  }
+  .story-id { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text-dim); flex-shrink: 0; min-width: 52px; }
+  .story-title { flex: 1; font-size: 0.83rem; font-weight: 600; color: var(--deep); }
+  .story-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  /* Bulk select bar */
+  #bulk-bar {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--deep); color: white;
+    padding: 14px 28px; border-radius: 99px;
+    display: flex; align-items: center; gap: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    opacity: 0; pointer-events: none; transition: 0.3s; z-index: 500;
+    font-size: 0.83rem; font-weight: 600;
+  }
+  #bulk-bar.visible { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+  #bulk-count { color: var(--cyan); font-weight: 800; }
+
+  /* ══════════════════════════ KANBAN ══════════════════════════ */
+  .kanban-board { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 20px; }
+  .kanban-col {
+    flex-shrink: 0; width: 230px;
+    background: #f1f5f9; border-radius: var(--radius);
+    display: flex; flex-direction: column; max-height: 70vh;
+  }
+  .col-header {
+    padding: 14px 14px 10px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .col-name {
+    font-size: 0.73rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--text-muted);
+  }
+  .col-count {
+    width: 22px; height: 22px; border-radius: 6px; background: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.68rem; font-weight: 800; color: var(--deep);
+    box-shadow: var(--shadow-sm);
+  }
+  .col-body { flex: 1; overflow-y: auto; padding: 0 10px 10px; }
+
+  .task-card {
+    background: white; border-radius: 10px; padding: 12px 14px;
+    margin-bottom: 10px; border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-sm); transition: 0.18s; cursor: pointer;
+  }
+  .task-card:hover { border-color: var(--cyan); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .task-card.blocked { border-color: var(--red) !important; background: #fff5f7; }
+  .task-card-id { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--text-dim); margin-bottom: 6px; }
+  .task-card-title { font-size: 0.8rem; font-weight: 700; color: var(--deep); line-height: 1.35; margin-bottom: 10px; }
+  .task-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .task-pts-badge {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700;
+    background: var(--bg); color: var(--deep); padding: 3px 8px; border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .task-assignee {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--cyan), var(--deep));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 800; color: white;
+  }
+  .blocked-tag {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 0.6rem; font-weight: 700; color: var(--red);
+    background: var(--red-dim); padding: 3px 8px; border-radius: 5px;
+    margin-top: 8px;
+  }
+
+  /* ══════════════════════════ MODAL ══════════════════════════ */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(15,23,42,0.55);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2000; opacity: 0; pointer-events: none; transition: 0.2s;
+    backdrop-filter: blur(3px);
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal-box {
+    background: white; border-radius: 16px; width: 680px; max-height: 88vh;
+    overflow-y: auto; box-shadow: 0 24px 60px rgba(0,0,0,0.18), 0 6px 20px rgba(0,0,0,0.08);
+    transform: translateY(8px); transition: 0.25s;
+  }
+  .modal-overlay.open .modal-box { transform: translateY(0); }
+
+  /* header */
+  .modal-head {
+    padding: 22px 26px 16px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+  }
+  .modal-id {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text-dim);
+    margin-bottom: 5px; letter-spacing: 0.04em;
+  }
+  .modal-title { font-size: 1.05rem; font-weight: 700; color: var(--deep); line-height: 1.35; }
+  .modal-close {
+    width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border);
+    background: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; transition: 0.15s; flex-shrink: 0; color: var(--text-muted);
+  }
+  .modal-close:hover { background: var(--bg); color: var(--deep); }
+
+  /* body */
+  .modal-body { padding: 0; }
+
+  /* meta strip */
+  .modal-meta-strip {
+    display: flex; align-items: center; gap: 20px; padding: 14px 26px;
+    border-bottom: 1px solid var(--border); background: #fafbfc;
+    font-size: 0.78rem; flex-wrap: wrap;
+  }
+  .modal-meta-item { display: flex; align-items: center; gap: 6px; color: var(--text-muted); }
+  .modal-meta-item strong { color: var(--deep); font-weight: 600; }
+  .modal-pts-pill {
+    font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700;
+    background: var(--cyan-dim); color: var(--cyan); padding: 3px 10px;
+    border-radius: 99px; border: 1px solid rgba(6,182,212,0.3);
+  }
+  .modal-assign-avatar {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--cyan), #0e7490);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 800; color: white;
+  }
+
+  /* sections */
+  .modal-section { padding: 20px 26px; border-bottom: 1px solid var(--border); }
+  .modal-section:last-child { border-bottom: none; }
+  .modal-section-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-dim); margin-bottom: 10px;
+  }
+  .modal-desc-text { font-size: 0.85rem; color: var(--deep); line-height: 1.65; }
+
+  /* NOM checklist */
+  .nom-list { display: flex; flex-direction: column; gap: 6px; }
+  .nom-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; border-radius: 8px;
+    border: 1px solid var(--border); font-size: 0.78rem; color: var(--deep);
+    background: white;
+  }
+  .nom-icon { font-size: 0.85rem; flex-shrink: 0; }
+  .nom-ok   { border-left: 3px solid var(--green); }
+  .nom-fail { border-left: 3px solid var(--red); background: #fff8f9; color: var(--text-muted); }
+  .nom-pend { border-left: 3px solid var(--gold); background: #fffdf0; }
+
+  /* criteria */
+  .criteria-list { display: flex; flex-direction: column; gap: 5px; }
+  .criteria-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.82rem; color: var(--deep); padding: 2px 0;
+  }
+  .criteria-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
+    flex-shrink: 0; margin-top: 6px;
+  }
+
+  /* chat */
+  .chat-wrap { display: flex; flex-direction: column; gap: 14px; }
+  .chat-bubble { display: flex; gap: 10px; align-items: flex-start; }
+  .chat-av {
+    width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--deep2), var(--deep3));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 800; color: white; margin-top: 2px;
+  }
+  .chat-content { flex: 1; }
+  .chat-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .chat-author { font-size: 0.78rem; font-weight: 700; color: var(--deep); }
+  .chat-time { font-size: 0.62rem; color: var(--text-dim); }
+  .chat-text {
+    font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;
+    background: #f8fafc; border-radius: 0 8px 8px 8px;
+    padding: 8px 12px; border: 1px solid var(--border);
+  }
+  .chat-input-row {
+    display: flex; gap: 8px; margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .chat-input {
+    flex: 1; padding: 9px 12px; border-radius: 8px;
+    border: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; outline: none; transition: 0.2s; color: var(--deep);
+  }
+  .chat-input:focus { border-color: var(--cyan); }
+  .chat-send-btn {
+    padding: 9px 16px; border-radius: 8px; background: var(--cyan);
+    color: var(--deep); font-weight: 700; font-size: 0.78rem;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: 0.18s;
+  }
+  .chat-send-btn:hover { background: #22d3ee; }
+
+  .modal-actions { display: flex; gap: 10px; padding: 18px 26px; border-top: 1px solid var(--border); flex-wrap: wrap; background: #fafbfc; border-radius: 0 0 16px 16px; }
+
+  /* legacy compat */
+  .modal-grid { display: none; }
+  .modal-field { display: none; }
+  .nom-checklist { display: none; }
+  .chat-thread { display: none; }
+
+  /* ══════════════════════════ METRICS ══════════════════════════ */
+  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .velocity-bar-wrap { display: flex; align-items: flex-end; gap: 10px; height: 120px; margin-top: 16px; }
+  .vel-bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .vel-bars { display: flex; gap: 3px; align-items: flex-end; height: 100px; }
+  .vel-bar {
+    width: 20px; border-radius: 4px 4px 0 0; transition: 0.5s;
+  }
+  .vel-bar.planned { background: var(--cyan-dim); border: 1.5px solid var(--cyan); }
+  .vel-bar.actual { background: var(--cyan); }
+  .vel-label { font-size: 0.65rem; color: var(--text-dim); font-weight: 600; }
+  .vel-sprint { font-size: 0.65rem; color: var(--text-muted); font-weight: 700; }
+
+  /* ══════════════════════════ CALENDAR ══════════════════════════ */
+  .cal-month-title { font-size:0.88rem; font-weight:800; color:var(--deep); margin-bottom:14px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+  .cal-day-header { text-align: center; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); padding: 4px 0 8px; }
+  .cal-cell {
+    min-height: 70px; border-radius: 7px;
+    background: #fafbfc; border: 1px solid var(--border);
+    padding: 6px 6px 4px; cursor: pointer; transition: 0.13s; position: relative;
+  }
+  .cal-cell:hover { border-color: var(--cyan); background: #f0fdff; }
+  .cal-cell.today { border-color: var(--cyan); background: var(--cyan-dim); }
+  .cal-cell.empty { background: transparent; border-color: transparent; cursor: default; pointer-events:none; }
+  .cal-cell.has-block { border-color: var(--red); }
+  .cal-num { font-size: 0.72rem; font-weight: 700; color: var(--deep); margin-bottom:3px; display:flex; align-items:center; gap:4px; }
+  .cal-today-badge { display:inline-block; background:var(--cyan); color:white; font-size:0.55rem; font-weight:800; border-radius:99px; padding:1px 5px; }
+  .cal-ev { font-size:0.56rem; font-weight:600; padding:2px 4px; border-radius:3px; margin-top:2px; line-height:1.4; display:flex; align-items:center; gap:3px; max-width:100%; overflow:hidden; }
+  .cal-ev span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .cal-ev-dot { width:4px; height:4px; border-radius:50%; flex-shrink:0; }
+  .cal-ev-cyan  { background:var(--cyan-dim);  color:#0891b2; }
+  .cal-ev-red   { background:var(--red-dim);   color:#e11d48; }
+  .cal-ev-green { background:var(--green-dim); color:#059669; }
+  .cal-ev-gold  { background:var(--gold-dim);  color:#92400e; }
+  .cal-ev-more  { font-size:0.54rem; color:var(--text-dim); }
+  .cal-dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+  .cal-type-btn { padding:6px 12px; border-radius:6px; border:1.5px solid var(--border); background:white; font-size:0.75rem; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:0.15s; color:var(--text-muted); }
+  .cal-type-btn[data-type="cyan"].sel  { border-color:var(--cyan);  background:var(--cyan-dim);  color:#0891b2; }
+  .cal-type-btn[data-type="green"].sel { border-color:var(--green); background:var(--green-dim); color:#059669; }
+  .cal-type-btn[data-type="red"].sel   { border-color:var(--red);   background:var(--red-dim);   color:#e11d48; }
+  .cal-type-btn[data-type="gold"].sel  { border-color:var(--gold);  background:var(--gold-dim);  color:#92400e; }
+  .cal-field { width:100%; padding:10px 13px; border-radius:8px; border:1.5px solid var(--border); font-family:'DM Sans',sans-serif; font-size:0.85rem; outline:none; transition:0.2s; color:var(--deep); margin-top:6px; }
+  .cal-field:focus { border-color:var(--cyan); }
+  .cal-ev-row { display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:7px; background:#f8fafc; border:1px solid var(--border); margin-bottom:5px; font-size:0.8rem; }
+  .cal-ev-del { margin-left:auto; cursor:pointer; color:var(--text-dim); font-size:0.72rem; padding:2px 7px; border-radius:4px; background:transparent; border:none; font-family:'DM Sans',sans-serif; }
+  .cal-ev-del:hover { background:var(--red-dim); color:var(--red); }
+  /* sprint role banner */
+  .role-filter-banner { display:flex; align-items:center; gap:10px; padding:10px 16px; background:#f8fafc; border:1px solid var(--border); border-radius:10px; margin-bottom:16px; font-size:0.78rem; color:var(--text-muted); }
+  .role-filter-banner strong { color:var(--deep); }
+  .rfb-dot { width:8px; height:8px; border-radius:50%; background:var(--cyan); flex-shrink:0; }
+  /* ══════════════════════════ ROLES VIEW ══════════════════════════ */
+  .roles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .role-card { border-radius: var(--radius); border: 1.5px solid var(--border); background: white; padding: 22px; transition: 0.2s; }
+  .role-card:hover { border-color: var(--cyan); }
+  .role-card-icon { font-size: 2rem; margin-bottom: 12px; }
+  .role-card-name { font-size: 0.95rem; font-weight: 800; color: var(--deep); margin-bottom: 4px; }
+  .role-card-sub { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; }
+  .role-perm { font-size: 0.72rem; color: var(--text-muted); padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
+  .role-perm:last-child { border-bottom: none; }
+  .perm-icon-ok { color: var(--green); }
+  .perm-icon-no { color: var(--red); }
+
+  /* ══════════════════════════ DOCS VIEW ══════════════════════════ */
+  .doc-list { }
+  .doc-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    transition: 0.15s; cursor: pointer;
+  }
+  .doc-item:last-child { border-bottom: none; }
+  .doc-item:hover { background: #f8fafc; }
+  .doc-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .doc-name { font-size: 0.85rem; font-weight: 700; color: var(--deep); }
+  .doc-meta { font-size: 0.71rem; color: var(--text-muted); margin-top: 3px; }
+  .doc-version {
+    margin-left: auto; font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    color: var(--text-dim); background: var(--bg); padding: 4px 8px;
+    border-radius: 5px; border: 1px solid var(--border);
+  }
+
+  /* ══════════════════════════ NOTIFICATIONS TOAST ══════════════════════════ */
+  #toast-container { position: fixed; top: 80px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 8px; }
+  .toast {
+    padding: 12px 18px; border-radius: var(--radius-sm); color: white;
+    font-size: 0.8rem; font-weight: 600; max-width: 300px;
+    box-shadow: var(--shadow-md); animation: toastIn 0.3s ease, toastOut 0.3s 3.7s ease forwards;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--red); }
+  .toast.info { background: var(--cyan); color: var(--deep); }
+  @keyframes toastIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes toastOut { from { opacity:1; } to { opacity:0; transform:translateX(20px); } }
+
+  /* Misc */
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .no-admin { display: none; }
+  .sep { height: 20px; }
+  input[type=checkbox] { accent-color: var(--cyan); }
+  .w-100 { width: 100%; }
+  .mt-12 { margin-top: 12px; }
+  .mt-20 { margin-top: 20px; }
+  .flex { display: flex; }
+  .items-center { align-items: center; }
+  .gap-8 { gap: 8px; }
+  .gap-12 { gap: 12px; }
+  .justify-between { justify-content: space-between; }
+  .wrap { flex-wrap: wrap; }
+  .mb-16 { margin-bottom: 16px; }
+  .font-mono { font-family: 'Space Mono', monospace; }
+  .text-sm { font-size: 0.8rem; }
+  .text-xs { font-size: 0.7rem; }
+  .text-muted { color: var(--text-muted); }
+  .fw-700 { font-weight: 700; }
+  .fw-800 { font-weight: 800; }
+  .tc { text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ LOGIN SCREEN ═══════════════════════ -->
+<div id="login-screen">
+  <div class="login-wrap">
+    <div class="login-logo">
+      <span></span> TEDE CONSULTORES · PLADIEX 2026
+    </div>
+    <div class="login-card">
+      <div class="login-title">PLADIEX HUB</div>
+      <div class="login-sub">Sistema de Gestión SCRUM · Sector Salud · NOM-004 / NOM-024</div>
+
+      <label class="login-label">Selecciona tu cuenta de prueba</label>
+      <div class="login-user-grid">
+        <button class="user-card-btn sel" onclick="selectUser('PO',this)">
+          <div class="uca uca-po">AT</div>
+          <div>
+            <div class="ucn">A. Treviño López</div>
+            <div class="ucr">Product Owner · CEO TEDE</div>
+          </div>
+        </button>
+        <button class="user-card-btn" onclick="selectUser('SM',this)">
+          <div class="uca uca-sm">FG</div>
+          <div>
+            <div class="ucn">F. González</div>
+            <div class="ucr">Scrum Master · Gestión ágil</div>
+          </div>
+        </button>
+        <button class="user-card-btn" onclick="selectUser('DEV',this)">
+          <div class="uca uca-dev">MG</div>
+          <div>
+            <div class="ucn">M. García</div>
+            <div class="ucr">Desarrollador Backend · Node.js</div>
+          </div>
+        </button>
+        <button class="user-card-btn" onclick="selectUser('DIS',this)">
+          <div class="uca uca-dis">LC</div>
+          <div>
+            <div class="ucn">L. Cruz</div>
+            <div class="ucr">Diseñadora UI · Ionic/React</div>
+          </div>
+        </button>
+        <button class="user-card-btn" onclick="selectUser('MED',this)">
+          <div class="uca uca-med">CR</div>
+          <div>
+            <div class="ucn">Dr. C. Ramírez</div>
+            <div class="ucr">Médico Consultor · Clínico</div>
+          </div>
+        </button>
+      </div>
+      <input class="login-input" id="login-pass" placeholder="Contraseña" type="password" value="••••••••">
+      <button class="login-btn" onclick="doLogin()">→ Entrar al Ecosistema</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ APP SHELL ═══════════════════════ -->
+<div id="app" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">PX</div>
+      <div>
+        <div class="sb-brand-text">PLADIEX HUB</div>
+        <div class="sb-brand-sub">www.pladiex.mx · Sprint 3</div>
+      </div>
+    </div>
+
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar-txt">FG</div>
+      <div>
+        <div class="sb-user-name" id="sb-user-name">Francisco González</div>
+        <div class="sb-user-role" id="sb-user-role">Product Owner</div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section-label">Gestión SCRUM</div>
+      <button class="nav-item active" onclick="showView('dashboard',this)">
+        <span class="nav-icon"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="currentColor" opacity=".5"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="currentColor" opacity=".5"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="currentColor"/></svg></span>
+        Dashboard
+        <span class="nav-badge-g">LIVE</span>
+      </button>
+      <button class="nav-item" onclick="showView('backlog',this)">
+        <span class="nav-icon"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="3" width="16" height="2" rx="1" fill="currentColor"/><rect x="1" y="8" width="16" height="2" rx="1" fill="currentColor" opacity=".6"/><rect x="1" y="13" width="10" height="2" rx="1" fill="currentColor" opacity=".35"/></svg></span>
+        Product Backlog
+        <span class="nav-badge">12</span>
+      </button>
+      <button class="nav-item" onclick="showView('sprint',this)">
+        <span class="nav-icon"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="4" height="16" rx="1.5" fill="currentColor" opacity=".4"/><rect x="7" y="1" width="4" height="12" rx="1.5" fill="currentColor"/><rect x="13" y="1" width="4" height="8" rx="1.5" fill="currentColor" opacity=".6"/></svg></span>
+        Sprint Board
+      </button>
+      <button class="nav-item" onclick="showView('metrics',this)">
+        <span class="nav-icon"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="1,14 5,9 8,11 12,5 17,8" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="8" r="1.5" fill="currentColor"/></svg></span>
+        Métricas & KPIs
+      </button>
+
+      <div class="sb-section-label">Plataforma</div>
+      <button class="nav-item no-admin" onclick="showView('docs',this)">
+        <span class="nav-icon"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="1" width="11" height="16" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 5h5M5 8h5M5 11h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M13 5l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg></span>
+        Documentación
+      </button>
+      <button class="nav-item" onclick="showView('calendar',this)">
+        <span class="nav-icon"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="3" width="16" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M1 7h16" stroke="currentColor" stroke-width="1.2"/><path d="M5 1v4M13 1v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="4" y="10" width="2.5" height="2.5" rx=".5" fill="currentColor" opacity=".5"/><rect x="7.7" y="10" width="2.5" height="2.5" rx=".5" fill="currentColor"/><rect x="11.5" y="10" width="2.5" height="2.5" rx=".5" fill="currentColor" opacity=".4"/></svg></span>
+        Calendario
+      </button>
+
+    </nav>
+
+    <div class="sb-footer">
+      <button class="sb-footer-btn" onclick="doLogout()">⎋ Salir</button>
+    </div>
+  </aside>
+
+  <!-- MAIN AREA -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+        <div class="topbar-crumb" id="topbar-crumb">PLADIEX / Sprint 3 · Mayo–Agosto 2026</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-sprint">
+          <span class="sprint-dot"></span>
+          Sprint 3 · Activo · 6 días restantes
+        </div>
+        <div class="topbar-icon-btn" onclick="showView('calendar',null)" title="Calendario"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><rect x="1" y="3" width="16" height="14" rx="1.5" stroke="#64748b" stroke-width="1.5"/><path d="M1 7h16" stroke="#64748b" stroke-width="1.2"/><path d="M5 1v4M13 1v4" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="topbar-icon-btn" onclick="showToast('3 alertas de cumplimiento NOM-004 pendientes','error')" title="Alertas">
+          <svg width="15" height="16" viewBox="0 0 15 17" fill="none"><path d="M7.5 1a4.5 4.5 0 0 0-4.5 4.5v3L1.5 11h12l-1.5-2.5v-3A4.5 4.5 0 0 0 7.5 1Z" stroke="#64748b" stroke-width="1.5"/><path d="M6 13a1.5 1.5 0 0 0 3 0" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span class="notif-dot"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ DASHBOARD ════ -->
+    <div class="view active" id="view-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card" style="--stat-color:var(--cyan);--stat-bg:var(--cyan-dim)">
+          <div class="stat-icon"><svg viewBox="0 0 22 22" fill="none"><polyline points="2,16 6,10 10,13 15,6 20,9" stroke="var(--cyan)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="16,6 20,6 20,10" stroke="var(--cyan)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-val">34 <span>pts</span></div>
+          <div class="stat-label">Velocidad Sprint 3</div>
+          <div class="stat-delta delta-up">↑ +8 vs Sprint 2</div>
+        </div>
+        <div class="stat-card" style="--stat-color:var(--green);--stat-bg:var(--green-dim)">
+          <div class="stat-icon"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="var(--green)" stroke-width="1.8"/><path d="M7 11l3 3 5-5" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-val">18</div>
+          <div class="stat-label">Historias Completadas</div>
+          <div class="stat-delta delta-up">↑ 72% del Sprint</div>
+        </div>
+        <div class="stat-card" style="--stat-color:var(--gold);--stat-bg:var(--gold-dim)">
+          <div class="stat-icon"><svg viewBox="0 0 22 22" fill="none"><path d="M11 3L2 19h18L11 3z" stroke="#f59e0b" stroke-width="1.7" stroke-linejoin="round"/><path d="M11 9v5" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round"/><circle cx="11" cy="16.5" r="0.8" fill="#f59e0b"/></svg></div>
+          <div class="stat-val">3</div>
+          <div class="stat-label">Impedimentos Activos</div>
+          <div class="stat-delta delta-dn">↑ +2 esta semana</div>
+        </div>
+        <div class="stat-card" style="--stat-color:var(--red);--stat-bg:var(--red-dim)">
+          <div class="stat-icon"><svg viewBox="0 0 22 22" fill="none"><path d="M11 3v10M11 17v2" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="9" stroke="var(--red)" stroke-width="1.6"/></svg></div>
+          <div class="stat-val">7</div>
+          <div class="stat-label">Pendientes NOM-004</div>
+          <div class="stat-delta delta-dn">Revisión requerida</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div>
+          <!-- Burndown -->
+          <div class="card mb-16">
+            <div class="burndown-wrap">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="fw-800" style="font-size:0.9rem">Burndown Chart · Sprint 3</div>
+                  <div class="text-xs text-muted mt-2">Progreso ideal vs. real (puntos de historia)</div>
+                </div>
+                <span class="badge badge-cyan">Sprint 3</span>
+              </div>
+              <div class="chart-area">
+                <canvas id="burndown-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Risk Table -->
+          <div class="card">
+            <div class="card-pad" style="padding-bottom:0">
+              <div class="flex items-center justify-between mb-16">
+                <div class="fw-800" style="font-size:0.9rem">Mapa de Riesgos · PLADIEX</div>
+                <button class="btn btn-ghost btn-sm" onclick="showView('metrics',null)">Ver Métricas →</button>
+              </div>
+            </div>
+            <table class="risk-table">
+              <thead>
+                <tr><th>Riesgo</th><th>Módulo</th><th>Impacto</th><th>Nivel</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="fw-700">Brecha NOM-004 en expediente</td>
+                  <td><span class="badge badge-red">Clínico</span></td>
+                  <td>Alto</td>
+                  <td><div class="risk-bar"><div class="risk-fill" style="width:85%;background:var(--red)"></div></div></td>
+                </tr>
+                <tr>
+                  <td class="fw-700">Latencia en Oracle Cloud</td>
+                  <td><span class="badge badge-gold">Infra</span></td>
+                  <td>Medio</td>
+                  <td><div class="risk-bar"><div class="risk-fill" style="width:55%;background:var(--gold)"></div></div></td>
+                </tr>
+                <tr>
+                  <td class="fw-700">Integración HL7 pendiente</td>
+                  <td><span class="badge badge-cyan">Backend</span></td>
+                  <td>Medio</td>
+                  <td><div class="risk-bar"><div class="risk-fill" style="width:45%;background:var(--cyan)"></div></div></td>
+                </tr>
+                <tr>
+                  <td class="fw-700">Validación de roles médico</td>
+                  <td><span class="badge badge-gold">Permisos</span></td>
+                  <td>Bajo</td>
+                  <td><div class="risk-bar"><div class="risk-fill" style="width:25%;background:var(--green)"></div></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Activity Feed -->
+        <div class="card">
+          <div class="card-pad" style="padding-bottom:10px">
+            <div class="fw-800" style="font-size:0.9rem">Actividad Reciente</div>
+          </div>
+          <div style="padding: 0 24px 20px">
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--green)"></div>
+              <div>
+                <div class="activity-text"><strong>M. García</strong> marcó <em>US-042</em> como Done</div>
+                <div class="activity-time">Hace 12 min · Sprint Board</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--red)"></div>
+              <div>
+                <div class="activity-text"><strong>F. González</strong> devolvió <em>US-038</em> por error de validación NOM</div>
+                <div class="activity-time">Hace 38 min · Backlog</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--gold)"></div>
+              <div>
+                <div class="activity-text"><strong>Sistema</strong> detectó impedimento en <em>US-034</em></div>
+                <div class="activity-time">Hace 1h · Daily Check-in</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--cyan)"></div>
+              <div>
+                <div class="activity-text"><strong>A. Treviño (PO)</strong> asignó 5 historias al Sprint 3</div>
+                <div class="activity-time">Hace 2h · Backlog</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--cyan)"></div>
+              <div>
+                <div class="activity-text"><strong>M. García</strong> actualizó docs NOM-024 v2.3</div>
+                <div class="activity-time">Ayer · Documentación</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--green)"></div>
+              <div>
+                <div class="activity-text">PostgreSQL → OCI sync completado (0 errores)</div>
+                <div class="activity-time">Ayer · Integraciones</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ BACKLOG ════ -->
+    <div class="view" id="view-backlog">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Product Backlog</div>
+          <div class="section-sub">Selecciona historias y asígnalas masivamente al Sprint activo</div>
+        </div>
+        <div class="flex gap-8 wrap">
+          <input id="backlog-search" placeholder="🔍 Buscar historia..." oninput="filterBacklog(this.value)">
+          <button class="btn btn-ghost btn-sm" onclick="selectAllBacklog()">☑ Seleccionar Todo</button>
+          <button class="btn btn-primary" onclick="openNewStoryModal()">＋ Nueva Historia</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); background:#f8fafc; display:flex; align-items:center; gap:12px; flex-wrap:wrap">
+          <span class="badge badge-must" id="filter-all" onclick="filterByMoscow('all',this)" style="cursor:pointer">Todo</span>
+          <span class="badge badge-must" onclick="filterByMoscow('MUST',this)" style="cursor:pointer">MUST</span>
+          <span class="badge badge-should" onclick="filterByMoscow('SHOULD',this)" style="cursor:pointer">SHOULD</span>
+          <span class="badge badge-could" onclick="filterByMoscow('COULD',this)" style="cursor:pointer">COULD</span>
+          <span class="badge badge-wont" onclick="filterByMoscow('WONT',this)" style="cursor:pointer">WON'T</span>
+          <span style="margin-left:auto;font-size:0.72rem;color:var(--text-muted)" id="backlog-count">12 historias</span>
+        </div>
+        <div id="backlog-list"></div>
+      </div>
+    </div>
+
+    <!-- ════ SPRINT BOARD ════ -->
+    <div class="view" id="view-sprint">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Sprint Board · Sprint 3</div>
+          <div class="section-sub">Tablero Kanban interactivo · 6 días restantes · 34 pts comprometidos</div>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn btn-ghost btn-sm" onclick="showToast('Daily Stand-up registrado para hoy 09:00','info')">Daily Log</button>
+          <button class="btn btn-primary btn-sm" onclick="showView('backlog',null);showToast('Ve al Backlog para asignar historias al sprint','info')">＋ Agregar al Sprint</button>
+        </div>
+      </div>
+      <div class="role-filter-banner" id="sprint-role-banner">
+        <span class="rfb-dot"></span>
+        <span id="sprint-role-text">Mostrando todas las tareas del sprint</span>
+      </div>
+      <div class="kanban-board" id="kanban-board"></div>
+    </div>
+
+    <!-- ════ METRICS ════ -->
+    <div class="view" id="view-metrics">
+      <div class="section-head">
+        <div><div class="section-title">Métricas & Analítica Ágil</div>
+        <div class="section-sub">Velocidad, burndown y salud del proyecto PLADIEX</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="showToast('Reporte PDF exportado','success')">Exportar PDF</button>
+      </div>
+
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card" style="--stat-color:var(--cyan);--stat-bg:var(--cyan-dim)">
+          <div class="stat-icon"><svg viewBox="0 0 22 22" fill="none"><polyline points="2,16 7,10 11,13 16,6 20,9" stroke="var(--cyan)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-val">34</div>
+          <div class="stat-label">Velocidad actual</div>
+          <div class="stat-delta delta-up">↑ Promedio: 28 pts</div>
+        </div>
+        <div class="stat-card" style="--stat-color:var(--green);--stat-bg:var(--green-dim)">
+          <div class="stat-icon"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8.5" stroke="var(--green)" stroke-width="1.7"/><path d="M7.5 11l2.5 2.5 5-5" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-val">78<span>%</span></div>
+          <div class="stat-label">Tasa de éxito Sprint</div>
+          <div class="stat-delta delta-up">↑ Meta: 75%</div>
+        </div>
+        <div class="stat-card" style="--stat-color:var(--gold);--stat-bg:var(--gold-dim)">
+          <div class="stat-icon"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8.5" stroke="#f59e0b" stroke-width="1.7"/><path d="M11 7v5l3 2" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <div class="stat-val">2.4<span>días</span></div>
+          <div class="stat-label">Tiempo ciclo prom.</div>
+          <div class="stat-delta delta-up">↓ Mejora 0.6d</div>
+        </div>
+        <div class="stat-card" style="--stat-color:var(--red);--stat-bg:var(--red-dim)">
+          <div class="stat-icon"><svg viewBox="0 0 22 22" fill="none"><path d="M4 4l14 14M18 4L4 18" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="11" r="8.5" stroke="var(--red)" stroke-width="1.5"/></svg></div>
+          <div class="stat-val">3</div>
+          <div class="stat-label">Bloqueos activos</div>
+          <div class="stat-delta delta-dn">↑ +2 vs ayer</div>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="card card-pad">
+          <div class="fw-800 mb-16">Velocidad por Sprint</div>
+          <div class="velocity-bar-wrap" id="vel-bars"></div>
+          <div class="flex gap-8 mt-12" style="font-size:0.7rem;color:var(--text-muted)">
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:var(--cyan-dim);border:1.5px solid var(--cyan);display:inline-block"></span> Planeado</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:var(--cyan);display:inline-block"></span> Real</span>
+          </div>
+        </div>
+        <div class="card card-pad">
+          <div class="fw-800 mb-16">Capacidad vs. Carga Real</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px" id="cap-chart"></div>
+        </div>
+        <div class="card card-pad">
+          <div class="fw-800 mb-16">Burndown Sprint 3 · Detalle</div>
+          <div class="chart-area"><canvas id="burndown2-canvas"></canvas></div>
+        </div>
+        <div class="card card-pad">
+          <div class="fw-800 mb-16">Distribución por Estado</div>
+          <div id="status-dist" style="margin-top:16px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ ROLES ════ -->
+    <div class="view" id="view-roles">
+      <div class="section-head">
+        <div><div class="section-title">Roles & Permisos</div>
+        <div class="section-sub">Control granular de acceso por módulo · Sistema PLADIEX</div></div>
+        <button class="btn btn-primary btn-sm" onclick="showToast('Módulo de roles en configuración avanzada','info')">⚙️ Configurar</button>
+      </div>
+      <div class="roles-grid">
+        <div class="role-card">
+          <div class="role-card-icon">🛡️</div>
+          <div class="role-card-name">Product Owner</div>
+          <div class="role-card-sub">A. Treviño López · CEO TEDE</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Dashboard completo</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Crear/eliminar historias</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Gestión de sprints</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Documentación normativa</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Integraciones & infraestructura</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Reportes financieros</div>
+          <div style="margin-top:14px"><span class="badge badge-deep">Acceso Total</span></div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-icon">🧭</div>
+          <div class="role-card-name">Scrum Master</div>
+          <div class="role-card-sub">F. González · M. García</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Dashboard + métricas</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Gestión de sprints</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Registro impedimentos</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Comunicación interna</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Configuración de roles</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Reportes financieros</div>
+          <div style="margin-top:14px"><span class="badge badge-cyan">Gestión Ágil</span></div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-icon">⚙️</div>
+          <div class="role-card-name">Dev Team</div>
+          <div class="role-card-sub">Desarrolladores · Diseño</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Sprint Board (sus tareas)</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Daily check-in móvil</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Chat del sprint</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Backlog completo</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Métricas globales</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Documentación NOM</div>
+          <div style="margin-top:14px"><span class="badge badge-should">Técnico</span></div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-icon">🩺</div>
+          <div class="role-card-name">Médico Consultor</div>
+          <div class="role-card-sub">Área Clínica · Auditoría</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Checklist NOM-004/024</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Validación clínica de HU</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Documentación normativa</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Sprint Board técnico</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Integraciones técnicas</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Configuración del sistema</div>
+          <div style="margin-top:14px"><span class="badge badge-green">Clínico</span></div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-icon">🔍</div>
+          <div class="role-card-name">Auditor QA</div>
+          <div class="role-card-sub">Calidad & Pruebas</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Review del Sprint</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Reportes de calidad</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Historial de cambios</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Gestión de backlog</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Configuración sprint</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Acceso a producción</div>
+          <div style="margin-top:14px"><span class="badge badge-gold">QA</span></div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-icon">👀</div>
+          <div class="role-card-name">Dirección</div>
+          <div class="role-card-sub">Vista ejecutiva · Solo lectura</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Dashboard ejecutivo</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Métricas y KPIs</div>
+          <div class="role-perm"><span class="perm-icon-ok">✓</span> Roadmap y progreso</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Editar tareas</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Chat interno</div>
+          <div class="role-perm"><span class="perm-icon-no">✗</span> Configuraciones</div>
+          <div style="margin-top:14px"><span class="badge badge-wont">Solo Lectura</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ DOCS ════ -->
+    <div class="view" id="view-docs">
+      <div class="section-head">
+        <div><div class="section-title">Repositorio de Documentación</div>
+        <div class="section-sub">Normas NOM-004, NOM-024 y documentación técnica de PLADIEX</div></div>
+        <button class="btn btn-primary btn-sm" onclick="showToast('Nuevo documento cargado al repositorio','success')">＋ Subir Documento</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div class="card">
+          <div class="card-pad" style="border-bottom:1px solid var(--border)">
+            <div class="fw-800" style="font-size:0.88rem">📜 Normativas de Salud</div>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item" onclick="showToast('Abriendo NOM-004 v3.1...','info')">
+              <div class="doc-icon" style="background:#fde8ff">📋</div>
+              <div>
+                <div class="doc-name">NOM-004-SSA3-2012</div>
+                <div class="doc-meta">Expediente clínico electrónico · Actualizado 12 May 2026</div>
+              </div>
+              <div class="doc-version">v3.1</div>
+            </div>
+            <div class="doc-item" onclick="showToast('Abriendo NOM-024 v2.3...','info')">
+              <div class="doc-icon" style="background:#e0f2fe">📑</div>
+              <div>
+                <div class="doc-name">NOM-024-SSA3-2012</div>
+                <div class="doc-meta">Sistemas de información en salud · Revisado 8 May 2026</div>
+              </div>
+              <div class="doc-version">v2.3</div>
+            </div>
+            <div class="doc-item" onclick="showToast('Abriendo checklist HIPAA...','info')">
+              <div class="doc-icon" style="background:#f0fdf4">🔒</div>
+              <div>
+                <div class="doc-name">HIPAA Compliance Checklist</div>
+                <div class="doc-meta">Privacy & Security Rule · En revisión</div>
+              </div>
+              <div class="doc-version">v1.0</div>
+            </div>
+            <div class="doc-item" onclick="showToast('Abriendo GDPR adaptación MX...','info')">
+              <div class="doc-icon" style="background:#fff7ed">🌐</div>
+              <div>
+                <div class="doc-name">GDPR / LFPDPPP Adaptación MX</div>
+                <div class="doc-meta">Protección datos personales · Borrador</div>
+              </div>
+              <div class="doc-version">draft</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-pad" style="border-bottom:1px solid var(--border)">
+            <div class="fw-800" style="font-size:0.88rem">🛠️ Documentación Técnica</div>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item" onclick="showToast('Abriendo arquitectura del sistema...','info')">
+              <div class="doc-icon" style="background:var(--cyan-dim)">🏗️</div>
+              <div>
+                <div class="doc-name">Arquitectura PLADIEX v2</div>
+                <div class="doc-meta">Node.js · PostgreSQL · OCI · Ionic/React</div>
+              </div>
+              <div class="doc-version">v2.0</div>
+            </div>
+            <div class="doc-item" onclick="showToast('Abriendo esquema DB...','info')">
+              <div class="doc-icon" style="background:var(--green-dim)">🗄️</div>
+              <div>
+                <div class="doc-name">Esquema DB PostgreSQL</div>
+                <div class="doc-meta">ERD relacional · Última migración 10 May</div>
+              </div>
+              <div class="doc-version">v1.4</div>
+            </div>
+            <div class="doc-item" onclick="showToast('Abriendo API docs...','info')">
+              <div class="doc-icon" style="background:#fef9c3">⚡</div>
+              <div>
+                <div class="doc-name">API REST · Endpoints PLADIEX</div>
+                <div class="doc-meta">OpenAPI 3.0 · 42 endpoints documentados</div>
+              </div>
+              <div class="doc-version">v2.1</div>
+            </div>
+            <div class="doc-item" onclick="showToast('Abriendo diseño UX...','info')">
+              <div class="doc-icon" style="background:#f5f3ff">🎨</div>
+              <div>
+                <div class="doc-name">Guía UX/UI · Ionic Components</div>
+                <div class="doc-meta">Design system · Figma link incluido</div>
+              </div>
+              <div class="doc-version">v1.2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ CALENDAR ════ -->
+    <div class="view" id="view-calendar">
+      <div class="section-head">
+        <div><div class="section-title" id="cal-section-title">Calendario · Mayo 2026</div>
+        <div class="section-sub">Entregas del Sprint · Impedimentos resaltados en rojo</div></div>
+        <div class="flex gap-8 items-center wrap">
+          <div class="flex items-center gap-8" style="font-size:0.72rem;color:var(--text-muted)">
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:var(--red-dim);border:1px solid var(--red);display:inline-block"></span>Impedimento</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:var(--cyan-dim);border:1px solid var(--cyan);display:inline-block"></span>Entrega</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:var(--green-dim);border:1px solid var(--green);display:inline-block"></span>Ceremonia</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:var(--gold-dim);border:1px solid var(--gold);display:inline-block"></span>Entrega</span>
+          </div>
+          <div class="flex gap-8">
+            <button class="btn btn-ghost btn-sm" onclick="calPrevMonth()">← Mes anterior</button>
+            <button class="btn btn-ghost btn-sm" onclick="calToday()">Hoy</button>
+            <button class="btn btn-ghost btn-sm" onclick="calNextMonth()">Mes siguiente →</button>
+          </div>
+        </div>
+      </div>
+      <div class="card card-pad" style="margin-bottom:16px">
+        <div id="cal-grid"></div>
+      </div>
+
+      <!-- Add event panel -->
+      <div class="card card-pad">
+        <div class="fw-800" style="font-size:0.88rem;margin-bottom:14px">＋ Agregar evento al calendario</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end">
+          <div>
+            <label class="login-label" style="color:var(--text-muted)">Día</label>
+            <input class="cal-field" id="cal-new-day" type="number" min="1" max="31" placeholder="Día del mes">
+          </div>
+          <div>
+            <label class="login-label" style="color:var(--text-muted)">Tipo</label>
+            <select class="cal-field" id="cal-new-type">
+              <option value="cyan">📦 Entrega</option>
+              <option value="green">🟢 Ceremonia / Sprint</option>
+              <option value="red">⚠️ Impedimento / Deadline</option>
+              <option value="gold">⭐ Otro</option>
+            </select>
+          </div>
+          <div>
+            <label class="login-label" style="color:var(--text-muted)">Descripción</label>
+            <input class="cal-field" id="cal-new-text" type="text" placeholder="Ej: Daily Sync, Review US-045...">
+          </div>
+          <button class="btn btn-primary" onclick="addCalEvent()">Agregar</button>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+  </div><!-- end .main -->
+</div><!-- end #app -->
+
+<!-- ════ BULK SELECT BAR ════ -->
+<div id="bulk-bar">
+  <span>Seleccionadas: <span id="bulk-count" style="color:var(--cyan);font-weight:800">0</span> historias</span>
+  <button class="btn btn-primary btn-sm" onclick="assignToSprint()">⚡ Asignar al Sprint →</button>
+  <button class="btn btn-ghost btn-sm" style="color:white;border-color:rgba(255,255,255,0.2)" onclick="clearSelection()">✕ Cancelar</button>
+</div>
+
+<!-- ════ TASK DETAIL MODAL ════ -->
+<div class="modal-overlay" id="task-modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div style="flex:1">
+        <div class="modal-id" id="modal-id">US-###</div>
+        <div class="modal-title" id="modal-title">Título de la Historia</div>
+        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap" id="modal-badges"></div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('task-modal').classList.remove('open')">✕</button>
+    </div>
+
+    <!-- meta strip -->
+    <div class="modal-meta-strip">
+      <div class="modal-meta-item">
+        <span>Story points</span>
+        <span class="modal-pts-pill" id="modal-pts-new">8</span>
+      </div>
+      <div class="modal-meta-item">
+        <span>Asignado a</span>
+        <div class="modal-assign-avatar" id="modal-assign-av">FG</div>
+        <strong id="modal-assign-name">F. González</strong>
+      </div>
+      <div class="modal-meta-item">
+        <span>Sprint</span>
+        <strong id="modal-sprint-new">Sprint 3</strong>
+      </div>
+      <div class="modal-meta-item">
+        <span>Límite</span>
+        <strong id="modal-due-new">—</strong>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <!-- descripción -->
+      <div class="modal-section">
+        <div class="modal-desc-text" id="modal-desc-new"></div>
+      </div>
+
+      <!-- NOM -->
+      <div class="modal-section" id="modal-nom-section" style="display:none">
+        <div class="modal-section-label">Cumplimiento normativo · NOM-004-SSA3</div>
+        <div class="nom-list" id="nom-items-new"></div>
+      </div>
+
+      <!-- Criterios -->
+      <div class="modal-section">
+        <div class="modal-section-label">Criterios de aceptación</div>
+        <div class="criteria-list" id="modal-criteria-new"></div>
+      </div>
+
+      <!-- Chat -->
+      <div class="modal-section" id="modal-chat-section">
+        <div class="modal-section-label">Comentarios del equipo</div>
+        <div class="chat-wrap" id="modal-chat-new"></div>
+        <div class="chat-input-row">
+          <input class="chat-input" id="modal-chat-input" placeholder="Escribe un comentario…">
+          <button class="chat-send-btn" onclick="sendModalComment()">Enviar</button>
+        </div>
+      </div>
+
+      <!-- acciones -->
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+
+    <!-- elementos legacy (ocultos, para compatibilidad con openModal) -->
+    <div style="display:none">
+      <div id="modal-desc"></div>
+      <div id="modal-assign"></div>
+      <div id="modal-sprint">Sprint 3</div>
+      <div id="modal-due"></div>
+      <div id="nom-items"></div>
+      <div id="modal-criteria"></div>
+      <div id="modal-chat"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ NEW STORY MODAL ════ -->
+<div class="modal-overlay" id="new-story-modal" onclick="closeNewModal(event)">
+  <div class="modal-box" style="width:540px">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">Nueva Historia de Usuario</div>
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px">Backlog · PLADIEX Sprint 3</div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('new-story-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:14px">
+        <label style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);display:block;margin-bottom:6px">Título de la Historia</label>
+        <input id="new-title" type="text" placeholder="Como [usuario], quiero [funcionalidad]..." style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+        <div>
+          <label style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);display:block;margin-bottom:6px">Prioridad MoSCoW</label>
+          <select id="new-moscow" style="width:100%;padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.82rem;outline:none">
+            <option value="MUST">MUST</option>
+            <option value="SHOULD">SHOULD</option>
+            <option value="COULD">COULD</option>
+            <option value="WONT">WON'T</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);display:block;margin-bottom:6px">Story Points</label>
+          <select id="new-pts" style="width:100%;padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.82rem;outline:none">
+            <option>1</option><option>2</option><option>3</option><option selected>5</option><option>8</option><option>13</option><option>21</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);display:block;margin-bottom:6px">Módulo</label>
+          <select id="new-module" style="width:100%;padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.82rem;outline:none">
+            <option>Clínico</option><option>Backend</option><option>Frontend</option><option>Infra</option><option>Normativo</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);display:block;margin-bottom:6px">Descripción</label>
+        <textarea id="new-desc" rows="3" placeholder="Descripción detallada..." style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.82rem;outline:none;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn-ghost" onclick="document.getElementById('new-story-modal').classList.remove('open')">Cancelar</button>
+        <button class="btn btn-primary" onclick="createStory()">Crear Historia →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ TOAST CONTAINER ════ -->
+<div id="toast-container"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//   DATA
+// ══════════════════════════════════════════════════════════════
+let currentRole = 'PO';
+let selectedStories = new Set();
+
+const BACKLOG_DATA = [
+  { id:'US-011', title:'Login biométrico para médicos en app móvil', pts:8, moscow:'MUST', module:'Clínico', assign:'FG', status:'backlog', due:'20 May',
+    desc:'Como médico consultor, quiero autenticarme con huella dactilar o Face ID desde la app móvil para acceder de forma segura al expediente clínico del paciente sin ingresar contraseña cada vez.',
+    nom:[
+      {ok:true, text:'Autenticación por factor único biométrico documentada'},
+      {ok:true, text:'Registro de acceso en bitácora NOM-004 §6.1'},
+      {ok:false, text:'Consentimiento informado digital firmado'},
+      {ok:null, text:'Cifrado AES-256 del token de sesión en tránsito'}
+    ],
+    criteria:['El sistema acepta huella/FaceID en Android e iOS','El token expira en 8 horas de inactividad','El intento fallido registra alerta al administrador','Compatible con Capacitor Biometric Plugin'],
+    chat:[
+      {who:'F. González',msg:'Esta HU es crítica para NOM-004. Debemos documentar todo el flujo de autenticación.',time:'12 May, 08:30'},
+      {who:'M. García',msg:'Capacitor ya tiene el plugin listo. Necesito confirmar compatibilidad con Oracle IAM.',time:'12 May, 09:15'},
+    ]
+  },
+  { id:'US-012', title:'Dashboard de expediente clínico FHIR R4', pts:13, moscow:'MUST', module:'Clínico', assign:'MA', status:'backlog', due:'22 May',
+    desc:'Como desarrollador backend, quiero implementar los endpoints FHIR R4 para gestionar recursos de paciente (Patient, Observation, MedicationRequest) de forma compatible con HL7.',
+    nom:[{ok:true,text:'Estructura FHIR R4 validada contra perfil MX'},{ok:false,text:'Consentimiento de datos §8.3 implementado'},{ok:null,text:'Audit log de acceso a recursos clínicos'},{ok:false,text:'Pseudonimización de datos personales'}],
+    criteria:['GET /Patient/{id} retorna recurso válido FHIR','POST /Observation crea registro con timestamp UTC','Autenticación OAuth2 requerida en todos los endpoints','Pruebas Postman al 100% pasando'],
+    chat:[{who:'M. García',msg:'HAPI FHIR Java es muy pesado para nuestro stack. Recomiendo fhir.js para Node.',time:'10 May, 14:00'},{who:'F. González',msg:'Acordado. Usamos fhir.js. Crear ticket para el setup del servidor.',time:'10 May, 14:30'}]
+  },
+  { id:'US-013', title:'Módulo de notificaciones push en tiempo real', pts:5, moscow:'MUST', module:'Backend', assign:'FG', status:'backlog', due:'19 May',
+    desc:'Como usuario de la app, quiero recibir notificaciones push cuando una tarea que me asignaron cambia de estado o cuando hay un nuevo impedimento en mi sprint.',
+    nom:[{ok:true,text:'Datos de notificación cifrados en tránsito'},{ok:true,text:'Opt-in documentado por NOM-024'},{ok:true,text:'Retención de logs ≤ 5 días hábiles'}],
+    criteria:['Firebase Cloud Messaging configurado','Notificación llega en <3s después del evento','El usuario puede desactivar notificaciones por tipo','Compatible con iOS 16+ y Android 12+'],
+    chat:[{who:'M. García',msg:'FCM está configurado en OCI. Solo necesito el endpoint del backend.',time:'11 May, 10:00'}]
+  },
+  { id:'US-014', title:'Exportación de reportes Sprint en PDF/CSV', pts:3, moscow:'SHOULD', module:'Frontend', assign:'FG', status:'backlog', due:'24 May',
+    desc:'Como Scrum Master, quiero exportar el reporte del sprint (velocidad, burndown, historias completadas) en formato PDF y CSV para compartirlo con el Product Owner.',
+    nom:[{ok:true,text:'Sin datos clínicos en reportes de gestión'},{ok:true,text:'Marca de agua corporativa PLADIEX'}],
+    criteria:['Botón "Exportar PDF" en vista de métricas','El PDF incluye logo, sprint y fecha','CSV incluye todas las columnas del tablero'],
+    chat:[{who:'A. Treviño',msg:'Este reporte es para presentaciones con el cliente. Debe verse profesional.',time:'9 May, 16:00'}]
+  },
+  { id:'US-015', title:'Filtros avanzados en el Product Backlog', pts:3, moscow:'SHOULD', module:'Frontend', assign:'MA', status:'backlog', due:'25 May',
+    desc:'Como Product Owner, quiero filtrar el backlog por módulo, prioridad MoSCoW, asignado y estado para gestionar grandes volúmenes de historias eficientemente.',
+    nom:[],
+    criteria:['Filtro por MoSCoW','Filtro por módulo (Clínico, Backend, Frontend, Infra)','Búsqueda por texto libre','Ordenamiento por puntos o prioridad'],
+    chat:[]
+  },
+  { id:'US-016', title:'Integración bidireccional con GitHub Issues', pts:8, moscow:'SHOULD', module:'Infra', assign:'FG', status:'backlog', due:'28 May',
+    desc:'Como desarrollador, quiero que las historias de usuario se sincronicen automáticamente con Issues de GitHub para evitar doble captura de información.',
+    nom:[],
+    criteria:['Webhook de GitHub conectado al backend','Nueva HU crea Issue en repo correcto','Al cerrar Issue en GitHub, la tarea pasa a Done automáticamente','Token OAuth2 de GitHub en variables de entorno OCI'],
+    chat:[{who:'F. González',msg:'GitHub Apps es mejor que OAuth personal para esto. Más seguro.',time:'8 May, 11:00'}]
+  },
+  { id:'US-017', title:'Gestión de épicas y roadmap trimestral', pts:8, moscow:'SHOULD', module:'Backend', assign:'MA', status:'backlog', due:'30 May',
+    desc:'Como Product Owner, quiero organizar las historias de usuario en épicas y visualizar el roadmap por trimestre para comunicar el progreso estratégico a la dirección.',
+    nom:[],
+    criteria:['CRUD de épicas','Vista de roadmap tipo Gantt simplificado','Indicadores de progreso por épica (% completado)','Exportable a PDF ejecutivo'],
+    chat:[]
+  },
+  { id:'US-018', title:'Checklist de validación NOM-004 por tarea', pts:5, moscow:'MUST', module:'Normativo', assign:'FG', status:'backlog', due:'17 May',
+    desc:'Como auditor clínico, quiero que cada tarea con impacto en expediente clínico tenga un checklist obligatorio de cumplimiento NOM-004 antes de poder marcarla como Done.',
+    nom:[{ok:true,text:'Checklist vinculado al flujo de aprobación'},{ok:true,text:'Auditoría de quién aprobó cada criterio'},{ok:false,text:'Firma digital del médico responsable'}],
+    criteria:['El checklist bloquea el botón "Done" si hay ítems incompletos','Cada ítem tiene responsable asignado','Se genera evidencia de cumplimiento en PDF','Sección visible para médico consultor y PO'],
+    chat:[{who:'A. Treviño',msg:'Esto es bloqueante para la certificación. Prioridad máxima.',time:'7 May, 09:00'},{who:'F. González',msg:'Entendido. Lo pongo como primer entregable del Sprint 3.',time:'7 May, 09:15'}]
+  },
+  { id:'US-019', title:'Sistema de roles con auditoría de acciones', pts:5, moscow:'MUST', module:'Backend', assign:'MA', status:'backlog', due:'21 May',
+    desc:'Como administrador, quiero que cada acción del sistema (crear, editar, eliminar, aprobar) quede registrada con usuario, timestamp y IP para cumplir con trazabilidad normativa.',
+    nom:[{ok:true,text:'Bitácora de auditoría en PostgreSQL'},{ok:true,text:'Retención mínima 5 años según NOM-004'},{ok:null,text:'Acceso a bitácora solo para roles autorizados'}],
+    criteria:['Todas las mutaciones generan log automático','Log incluye: userId, acción, timestamp, IP, recurso afectado','Consulta de bitácora con filtros de fecha y usuario','Log es inmutable (no editable ni eliminable)'],
+    chat:[]
+  },
+  { id:'US-020', title:'Dashboard ejecutivo con KPIs del proyecto', pts:5, moscow:'COULD', module:'Frontend', assign:'FG', status:'backlog', due:'27 May',
+    desc:'Como director de TEDE, quiero un dashboard de solo lectura con los KPIs más importantes del proyecto (velocidad, riesgos, progreso, cumplimiento) para revisiones ejecutivas.',
+    nom:[],
+    criteria:['Vista separada accesible con rol Dirección','Sin datos técnicos detallados','Gráficas de burndown, velocidad y riesgo','Actualización en tiempo real vía WebSocket'],
+    chat:[]
+  },
+  { id:'US-021', title:'Chatbot de asistencia para Daily Stand-up', pts:3, moscow:'COULD', module:'Backend', assign:'MA', status:'backlog', due:'1 Jun',
+    desc:'Como desarrollador, quiero un chatbot que me recuerde las 3 preguntas del daily (¿Qué hice? ¿Qué haré? ¿Impedimentos?) y registre mis respuestas automáticamente.',
+    nom:[],
+    criteria:['Notificación push a las 09:00 cada día laboral','El chatbot acepta respuestas en lenguaje natural','Las respuestas se agregan al registro del daily del sprint','Integración con WhatsApp opcional'],
+    chat:[]
+  },
+  { id:'US-022', title:'Modo oscuro y accesibilidad WCAG 2.1', pts:2, moscow:'WONT', module:'Frontend', assign:'FG', status:'backlog', due:'–',
+    desc:'Como usuario, quiero que la aplicación tenga modo oscuro y cumpla con los criterios de accesibilidad WCAG 2.1 nivel AA para uso en entornos clínicos con iluminación reducida.',
+    nom:[],
+    criteria:['Toggle de modo oscuro en configuración','Contraste mínimo 4.5:1 en todos los textos','Navegación completa por teclado','Atributos ARIA en todos los componentes interactivos'],
+    chat:[]
+  },
+];
+
+const SPRINT_DATA = [
+  { id:'US-031', title:'API de autenticación JWT + refresh tokens', pts:8, moscow:'MUST', module:'Backend', assign:'FG', col:'done', due:'10 May', blocked:false,
+    desc:'Implementar sistema de autenticación con JWT, refresh tokens y blacklisting para logout seguro.',
+    nom:[{ok:true,text:'Token cifrado con HS256'},{ok:true,text:'Expiración en 8h'},{ok:true,text:'Refresh token seguro en HTTP-only cookie'}],
+    criteria:['POST /auth/login retorna access + refresh token','POST /auth/refresh renueva el access token','POST /auth/logout invalida el token','Documentado en Swagger'],
+    chat:[{who:'M. García',msg:'Implementado y testeado. 0 vulnerabilidades en OWASP scan.',time:'10 May, 16:00'}]
+  },
+  { id:'US-032', title:'Esquema PostgreSQL · Módulo Clínico', pts:13, moscow:'MUST', module:'Infra', assign:'MA', col:'done', due:'11 May', blocked:false,
+    desc:'Diseñar e implementar el esquema relacional de base de datos para el módulo clínico con cifrado de campos sensibles.',
+    nom:[{ok:true,text:'Campos PII cifrados con pgcrypto'},{ok:true,text:'RLS (Row Level Security) activado'},{ok:true,text:'Backups automáticos en OCI Object Storage'}],
+    criteria:['Tablas: paciente, expediente, consulta, medicamento','Foreign keys con ON DELETE CASCADE donde aplique','Índices en campos de búsqueda frecuente','Migration script documentado'],
+    chat:[{who:'F. González',msg:'Schema aprobado por A. Treviño. Excelente trabajo.',time:'11 May, 09:00'}]
+  },
+  { id:'US-033', title:'Tablero Kanban real-time con WebSockets', pts:8, moscow:'MUST', module:'Frontend', assign:'FG', col:'review', due:'14 May', blocked:false,
+    desc:'Implementar el tablero Kanban con actualización en tiempo real usando Socket.io para que todos los miembros del equipo vean los cambios instantáneamente.',
+    nom:[],
+    criteria:['Drag & drop entre columnas','Actualización en <500ms vía Socket.io','Indicador de quién está editando una tarjeta','Soporte offline con cola de sincronización'],
+    chat:[{who:'M. García',msg:'El drag & drop ya funciona. Falta el indicador de presencia.',time:'13 May, 10:00'},{who:'F. González',msg:'Lo termino hoy en la tarde.',time:'13 May, 10:15'}]
+  },
+  { id:'US-034', title:'Integración FHIR con expediente OCI', pts:13, moscow:'MUST', module:'Clínico', assign:'MA', col:'inprogress', due:'16 May', blocked:true,
+    desc:'Conectar el backend con Oracle Health Data Intelligence para sincronizar recursos FHIR R4 (Patient, Encounter, Observation) desde la base local PostgreSQL hacia OCI.',
+    nom:[{ok:true,text:'Autenticación OAuth2 con Oracle IAM'},{ok:false,text:'Mapeo de IDs locales a IDs FHIR Global'},{ok:null,text:'Validación de recursos contra perfil HL7 MX'},{ok:false,text:'Consent resource implementado'}],
+    criteria:['Sincronización bidireccional Patient resource','GET de Observation devuelve datos en <2s','Manejo de conflictos con "last-write-wins"','Tests de integración con Postman al 100%'],
+    chat:[{who:'M. García',msg:'🚫 BLOQUEO: Las credenciales de Oracle IAM aún no están configuradas en OCI.',time:'13 May, 08:00'},{who:'F. González',msg:'Escalado a A. Treviño para gestionar con soporte Oracle.',time:'13 May, 08:30'}]
+  },
+  { id:'US-035', title:'UI de Sprint Planning con estimación Poker', pts:5, moscow:'SHOULD', module:'Frontend', assign:'FG', col:'inprogress', due:'15 May', blocked:false,
+    desc:'Crear la interfaz de Planning Poker para que el equipo estime las historias de usuario de forma colaborativa usando la secuencia de Fibonacci.',
+    nom:[],
+    criteria:['Sala virtual de estimación con link compartible','Cartas: 1,2,3,5,8,13,21,?','Revelar todas las cartas simultáneamente','Consenso automático si todos votan igual'],
+    chat:[{who:'F. González',msg:'Usando Yjs para el estado compartido en tiempo real.',time:'12 May, 14:00'}]
+  },
+  { id:'US-036', title:'Reportes de velocidad del equipo por sprint', pts:3, moscow:'SHOULD', module:'Frontend', assign:'MA', col:'inprogress', due:'15 May', blocked:false,
+    desc:'Implementar las gráficas de velocidad del equipo comparando sprints pasados con Recharts.',
+    nom:[],
+    criteria:['Gráfica de barras con velocidad planeada vs real','Línea de tendencia de velocidad','Exportable como PNG','Filtrable por rango de sprints'],
+    chat:[{who:'M. García',msg:'Avanzando con Recharts. Ya tengo la gráfica de barras base. Mañana agrego la línea de tendencia.',time:'13 May, 11:00'},{who:'F. González',msg:'Perfecto, asegúrate de que sea exportable en PNG antes del review del 15.',time:'13 May, 11:20'}]
+  },
+  { id:'US-037', title:'Gestión de épicas en Product Backlog', pts:5, moscow:'SHOULD', module:'Backend', assign:'FG', col:'todo', due:'18 May', blocked:false,
+    desc:'CRUD de épicas con asignación de historias y tracking de progreso porcentual.',
+    nom:[],
+    criteria:['Crear/editar/eliminar épicas','Asignar HUs a épicas','Barra de progreso por épica','Vista de roadmap simplificado'],
+    chat:[{who:'F. González',msg:'Empiezo esto el 16 una vez que libere el Kanban real-time. API REST ya está diseñada.',time:'12 May, 16:00'},{who:'A. Treviño',msg:'Bien. La vista de roadmap simplificada es lo más importante para el cliente.',time:'12 May, 16:30'}]
+  },
+  { id:'US-038', title:'Firma electrónica NOM-004 en expediente', pts:8, moscow:'MUST', module:'Normativo', assign:'MA', col:'todo', due:'17 May', blocked:true,
+    desc:'Implementar la firma electrónica avanzada del médico en cada registro de expediente clínico según NOM-004-SSA3 sección 6.4.',
+    nom:[{ok:false,text:'Certificado digital del médico validado'},{ok:false,text:'Sello de tiempo confiable (TSA)'},{ok:null,text:'Hash SHA-256 del documento firmado'},{ok:false,text:'Revocación del certificado contemplada'}],
+    criteria:['Integración con PSC certificado por SAT','Firma en PDF con estándar CAdES','El expediente firmado no puede modificarse','Visualización del estado de firma en UI'],
+    chat:[{who:'F. González',msg:'⛔ Devuelto por error. Falta el proveedor de firma digital. Investigar Certinómina o SAT PSC.',time:'13 May, 09:31'},{who:'A. Treviño',msg:'Correcto. Sin el PSC correcto no podemos avanzar. Bloqueado.',time:'13 May, 09:45'}]
+  },
+  { id:'US-039', title:'App móvil · Pantalla de Daily Check-in', pts:5, moscow:'MUST', module:'Frontend', assign:'FG', col:'todo', due:'19 May', blocked:false,
+    desc:'Diseñar e implementar la pantalla de Daily Check-in en la app Ionic/React con las 3 preguntas estándar del stand-up.',
+    nom:[],
+    criteria:['Pantalla carga en <1s','Guardado local offline-first','Sincronización al detectar conexión','Historial de check-ins de los últimos 7 días'],
+    chat:[{who:'F. González',msg:'Coordinando con L. Cruz para los wireframes. Ionic Components ya definidos.',time:'12 May, 09:00'},{who:'L. Cruz',msg:'Wireframes listos en Figma. Comparto el link al equipo.',time:'12 May, 10:30'}]
+  },
+  { id:'US-040', title:'Config inicial OCI · VCN y reglas de red', pts:3, moscow:'MUST', module:'Infra', assign:'MA', col:'done', due:'8 May', blocked:false,
+    desc:'Configurar la Virtual Cloud Network en Oracle Cloud con subnets públicas y privadas, security lists y gateways.',
+    nom:[{ok:true,text:'Reglas de ingreso mínimo (least privilege)'},{ok:true,text:'Subnet privada para PostgreSQL'},{ok:true,text:'SSL/TLS en load balancer'}],
+    criteria:['VCN creada con CIDR 10.0.0.0/16','Subnet pública para app servers','Subnet privada para DB','Internet Gateway + NAT Gateway configurados'],
+    chat:[{who:'M. García',msg:'VCN lista. PostgreSQL corriendo en subnet privada. OCI certificado.',time:'8 May, 17:00'}]
+  },
+  { id:'US-041', title:'Módulo de chat interno por sprint', pts:5, moscow:'SHOULD', module:'Frontend', assign:'FG', col:'done', due:'9 May', blocked:false,
+    desc:'Chat en tiempo real por sprint usando Socket.io para comunicación del equipo dentro de la plataforma.',
+    nom:[],
+    criteria:['Mensajes en tiempo real vía Socket.io','Historial persistente en PostgreSQL','Menciones con @usuario','Notificación push al ser mencionado'],
+    chat:[{who:'M. García',msg:'Chat funcionando. Probado con 5 usuarios simultáneos.',time:'9 May, 15:00'}]
+  },
+  { id:'US-042', title:'Validación de criterios de aceptación en Done', pts:3, moscow:'MUST', module:'Backend', assign:'MA', col:'review', due:'14 May', blocked:false,
+    desc:'Bloquear el movimiento a "Done" si no se han marcado todos los criterios de aceptación en el checklist de la tarea.',
+    nom:[{ok:true,text:'Log de aprobación registrado'},{ok:true,text:'Notificación al PO al mover a Done'}],
+    criteria:['Modal de confirmación al mover a Done','Lista de criterios con checkboxes','Botón Done deshabilitado si criterios incompletos','Registro de quién aprobó y cuándo'],
+    chat:[{who:'M. García',msg:'Lista para revisión del PO.',time:'13 May, 14:00'}]
+  },
+  { id:'US-043', title:'Diseño UI · Sistema de Design Tokens PLADIEX', pts:5, moscow:'MUST', module:'Frontend', assign:'LC', col:'inprogress', due:'16 May', blocked:false,
+    desc:'Definir e implementar el sistema de design tokens de PLADIEX: colores, tipografías, espaciados, sombras y estados de componentes para garantizar consistencia en todas las pantallas de la app Ionic/React.',
+    nom:[{ok:true,text:'Contraste mínimo 4.5:1 en modo clínico'},{ok:true,text:'Iconografía sin ambigüedad para entorno médico'},{ok:null,text:'Revisión de accesibilidad WCAG 2.1 nivel AA'}],
+    criteria:['Tokens exportados desde Figma a CSS variables','Paleta de colores documentada con valores HEX y HSL','Componentes: Button, Input, Card, Badge, Modal, Toast','Librería Storybook publicada en staging'],
+    chat:[{who:'L. Cruz',msg:'Tokens base ya definidos en Figma. Empiezo a exportar a CSS variables esta tarde.',time:'12 May, 14:00'},{who:'F. González',msg:'Perfecto L. Cruz, coordina con M. García para integrar con el backend cuando esté listo.',time:'12 May, 14:20'},{who:'L. Cruz',msg:'Listo, ya tenemos los estados hover, active y disabled de todos los botones.',time:'13 May, 09:00'}]
+  },
+  { id:'US-044', title:'Diseño UI · Pantallas de Expediente Clínico', pts:8, moscow:'MUST', module:'Clínico', assign:'LC', col:'todo', due:'19 May', blocked:false,
+    desc:'Diseñar los flujos de UI/UX para el expediente clínico digital: pantalla de resumen del paciente, historial de consultas, signos vitales y medicamentos, optimizados para uso médico en tablet.',
+    nom:[{ok:true,text:'Jerarquía visual clara para datos críticos del paciente'},{ok:false,text:'Validación de flujos por médico consultor'},{ok:null,text:'Prueba de usabilidad con Dr. Ramírez'}],
+    criteria:['Prototipo interactivo en Figma aprobado por PO','Pantalla de resumen carga en < 1s','Diseño optimizado para tablet 10" en entorno clínico','Flujo de consulta validado por Dr. Ramírez'],
+    chat:[{who:'L. Cruz',msg:'Iniciando wireframes de baja fidelidad. Necesito revisión clínica de los campos del expediente.',time:'13 May, 10:00'},{who:'Dr. C. Ramírez',msg:'Con gusto los reviso. Los campos más críticos son: diagnóstico, medicamentos activos y alergias. Deben estar en la primera pantalla.',time:'13 May, 10:45'},{who:'L. Cruz',msg:'Anotado Dr. Ramírez. Ajusto el layout para que esos datos sean siempre visibles sin scroll.',time:'13 May, 11:00'}]
+  },
+  { id:'US-045', title:'Validación clínica · Checklist NOM-004 en expediente', pts:5, moscow:'MUST', module:'Normativo', assign:'CR', col:'inprogress', due:'15 May', blocked:false,
+    desc:'El Dr. Ramírez valida que los criterios de cumplimiento NOM-004-SSA3 estén correctamente implementados en el módulo de expediente clínico. Revisión de campos obligatorios, firma del médico y trazabilidad de cambios.',
+    nom:[{ok:true,text:'Campos obligatorios según §5.2 NOM-004 presentes'},{ok:true,text:'Diagnóstico codificado en CIE-10'},{ok:false,text:'Firma electrónica del médico responsable'},{ok:null,text:'Trazabilidad de modificaciones con timestamp'}],
+    criteria:['Todos los campos §5.2 NOM-004 están presentes en el formulario','El diagnóstico acepta códigos CIE-10 válidos','El historial de cambios muestra quién modificó qué y cuándo','El médico firma digitalmente antes de cerrar el expediente'],
+    chat:[{who:'Dr. C. Ramírez',msg:'Revisé la pantalla de expediente. Faltan los campos de "antecedentes heredofamiliares" y "padecimiento actual" que son obligatorios en NOM-004 §5.2.4.',time:'12 May, 16:00'},{who:'F. González',msg:'Tomado Dr. Ramírez. Creo ticket para M. García. ¿Puede detallar los subcampos exactos?',time:'12 May, 16:15'},{who:'Dr. C. Ramírez',msg:'Claro: Antecedentes HF (DM, HTA, cardiopatías), Padecimiento actual (inicio, evolución, síntomas), Exploración física (signos vitales, peso, talla).',time:'12 May, 16:30'},{who:'M. García',msg:'Perfecto, agrego esos campos al schema esta tarde y actualizo el formulario.',time:'12 May, 17:00'}]
+  },
+  { id:'US-046', title:'Revisión clínica · Flujo de prescripción digital', pts:3, moscow:'MUST', module:'Clínico', assign:'CR', col:'todo', due:'17 May', blocked:false,
+    desc:'El Dr. Ramírez revisa y valida el flujo de prescripción digital para asegurarse de que cumpla con los requisitos clínicos y normativos para la emisión de recetas médicas en el sistema PLADIEX.',
+    nom:[{ok:true,text:'Receta contiene nombre genérico del medicamento'},{ok:false,text:'Dosis expresada en unidades del Sistema Internacional'},{ok:false,text:'Vigencia de la receta especificada (NOM-004 §6.5)'},{ok:null,text:'Firma digital del médico emisor'}],
+    criteria:['El formulario incluye: medicamento, dosis, vía, frecuencia, duración','El sistema valida interacciones medicamentosas básicas','La receta genera PDF con datos del médico y cédula profesional','El expediente registra automáticamente cada prescripción'],
+    chat:[{who:'Dr. C. Ramírez',msg:'El flujo de prescripción actual no incluye la vía de administración, que es obligatoria en NOM-004. Tampoco la vigencia de la receta.',time:'13 May, 08:00'},{who:'F. González',msg:'Agregamos esos campos. ¿La validación de interacciones es para este sprint o la dejamos para el siguiente?',time:'13 May, 08:20'},{who:'Dr. C. Ramírez',msg:'La validación de interacciones puede ir en el siguiente sprint, pero los campos faltantes son bloqueantes para cumplimiento normativo.',time:'13 May, 08:35'}]
+  },
+];
+
+// ══════════════════════════════════════════════════════════════
+//   LOGIN
+// ══════════════════════════════════════════════════════════════
+const USERS = {
+  PO:  { name:'A. Treviño López', role:'Product Owner',       avatar:'AT', avatarClass:'uca-po'  },
+  SM:  { name:'F. González',      role:'Scrum Master',        avatar:'FG', avatarClass:'uca-sm'  },
+  DEV: { name:'M. García',        role:'Desarrollador',       avatar:'MG', avatarClass:'uca-dev' },
+  DIS: { name:'L. Cruz',          role:'Diseñadora UI',       avatar:'LC', avatarClass:'uca-dis' },
+  MED: { name:'Dr. C. Ramírez',   role:'Médico Consultor',    avatar:'CR', avatarClass:'uca-med' },
+};
+
+function selectUser(role, btn) {
+  currentRole = role;
+  document.querySelectorAll('.user-card-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function doLogin() {
+  const u = USERS[currentRole];
+  document.getElementById('sb-user-name').textContent = u.name;
+  document.getElementById('sb-user-role').textContent = u.role;
+  const av = document.getElementById('sb-avatar-txt');
+  av.textContent = u.avatar;
+  av.style.background = '';
+  // color del avatar en sidebar según rol
+  const avColors = {
+    PO:'linear-gradient(135deg,#06b6d4,#0e7490)',
+    SM:'linear-gradient(135deg,#f59e0b,#d97706)',
+    DEV:'linear-gradient(135deg,#8b5cf6,#6d28d9)',
+    DIS:'linear-gradient(135deg,#ec4899,#db2777)',
+    MED:'linear-gradient(135deg,#10b981,#059669)',
+  };
+  av.style.background = avColors[currentRole] || avColors.PO;
+  av.style.color = currentRole === 'SM' ? 'var(--deep)' : 'white';
+
+  // Role-based visibility
+  const adminItems = document.querySelectorAll('.no-admin');
+  adminItems.forEach(el => {
+    el.style.display = (currentRole === 'PO' || currentRole === 'SM') ? '' : 'none';
+  });
+
+  // Update sprint board role banner
+  const canSeeAll = (currentRole === 'PO' || currentRole === 'SM');
+  const bannerText = document.getElementById('sprint-role-text');
+  if (bannerText) {
+    if (canSeeAll) {
+      bannerText.innerHTML = 'Mostrando <strong>todas las tareas</strong> del sprint · Vista completa';
+    } else {
+      const u2 = USERS[currentRole];
+      bannerText.innerHTML = `Mostrando solo <strong>tus tareas asignadas</strong> · ${u2.name}`;
+    }
+  }
+
+  document.getElementById('login-screen').style.opacity = '0';
+  document.getElementById('login-screen').style.transition = '0.5s';
+  setTimeout(() => {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    initAll();
+  }, 500);
+}
+
+function doLogout() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-screen').style.opacity = '1';
+}
+
+// ══════════════════════════════════════════════════════════════
+//   NAVIGATION
+// ══════════════════════════════════════════════════════════════
+const viewTitles = {
+  dashboard: ['Dashboard', 'PLADIEX / Sprint 3 · Mayo–Agosto 2026'],
+  backlog: ['Product Backlog', 'Priorización MoSCoW · 12 historias pendientes'],
+  sprint: ['Sprint Board', 'Sprint 3 · Kanban Interactivo · Ionic/React/Node.js'],
+  metrics: ['Métricas & Analítica', 'Velocidad · Burndown · Salud del proyecto'],
+  roles: ['Roles & Permisos', 'Control granular de acceso · 6 roles configurados'],
+  docs: ['Documentación', 'NOM-004 · NOM-024 · Docs técnicos PLADIEX'],
+  calendar: ['Calendario Mayo 2026', 'Sprints · Entregas · Ceremonias SCRUM'],
+  mobile: ['App Móvil · Daily Check-in', 'Ionic + React + Capacitor · iOS / Android'],
+  integrations: ['Integraciones', 'PostgreSQL · Node.js · Oracle Cloud OCI · GitHub'],
+};
+
+function showView(name, navEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  const t = viewTitles[name];
+  document.getElementById('topbar-title').textContent = t[0];
+  document.getElementById('topbar-crumb').textContent = t[1];
+  if (name === 'sprint') renderKanban();
+  if (name === 'calendar') renderCalendar();
+}
+
+// ══════════════════════════════════════════════════════════════
+//   INIT
+// ══════════════════════════════════════════════════════════════
+function initAll() {
+  renderBacklog();
+  renderKanban();
+  renderCalendar();
+  renderMetrics();
+  drawBurndown('burndown-canvas');
+  drawBurndown('burndown2-canvas');
+}
+
+// ══════════════════════════════════════════════════════════════
+//   BACKLOG
+// ══════════════════════════════════════════════════════════════
+let backlogFilter = 'all';
+let backlogSearch = '';
+
+function renderBacklog() {
+  const list = document.getElementById('backlog-list');
+  const data = BACKLOG_DATA.filter(s => {
+    const matchMoscow = backlogFilter === 'all' || s.moscow === backlogFilter;
+    const matchSearch = !backlogSearch || s.title.toLowerCase().includes(backlogSearch.toLowerCase()) || s.id.toLowerCase().includes(backlogSearch.toLowerCase());
+    return matchMoscow && matchSearch;
+  });
+  document.getElementById('backlog-count').textContent = data.length + ' historias';
+
+  if (!data.length) {
+    list.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-dim);font-size:0.85rem">No se encontraron historias.</div>';
+    return;
+  }
+
+  list.innerHTML = data.map(s => {
+    const sel = selectedStories.has(s.id);
+    const moscowClass = { MUST:'badge-must', SHOULD:'badge-should', COULD:'badge-could', WONT:'badge-wont' }[s.moscow];
+    return `
+      <div class="story-row${sel?' sel':''}" onclick="toggleStory('${s.id}',this)">
+        <div class="story-check">${sel?'<svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</div>
+        <div class="story-pts">${s.pts}</div>
+        <div class="story-id">${s.id}</div>
+        <div class="story-title">${s.title}</div>
+        <div class="story-meta">
+          <span class="badge ${moscowClass}">${s.moscow}</span>
+          <span class="badge badge-cyan" style="font-size:0.6rem">${s.module}</span>
+          <span style="font-size:0.68rem;color:var(--text-dim)">${s.due}</span>
+          <button class="btn btn-ghost btn-xs" onclick="event.stopPropagation();openModal('${s.id}','backlog')">Ver</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function filterBacklog(v) { backlogSearch = v; renderBacklog(); }
+function filterByMoscow(v, el) {
+  backlogFilter = v;
+  document.querySelectorAll('[onclick^="filterByMoscow"]').forEach(b => b.style.outline='none');
+  if (el) el.style.outline = '2px solid var(--cyan)';
+  renderBacklog();
+}
+
+function toggleStory(id, row) {
+  if (selectedStories.has(id)) selectedStories.delete(id);
+  else selectedStories.add(id);
+  row.classList.toggle('sel', selectedStories.has(id));
+  const check = row.querySelector('.story-check');
+  check.innerHTML = selectedStories.has(id) ? '<svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '';
+  updateBulkBar();
+}
+
+function selectAllBacklog() {
+  BACKLOG_DATA.forEach(s => selectedStories.add(s.id));
+  renderBacklog();
+  updateBulkBar();
+}
+
+function clearSelection() {
+  selectedStories.clear();
+  renderBacklog();
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulk-bar');
+  const count = selectedStories.size;
+  document.getElementById('bulk-count').textContent = count;
+  bar.classList.toggle('visible', count > 0);
+}
+
+function assignToSprint() {
+  const count = selectedStories.size;
+  selectedStories.forEach(id => {
+    const story = BACKLOG_DATA.find(s => s.id === id);
+    if (story) {
+      SPRINT_DATA.push({ ...story, col: 'todo', blocked: false });
+      BACKLOG_DATA.splice(BACKLOG_DATA.indexOf(story), 1);
+    }
+  });
+  clearSelection();
+  renderBacklog();
+  renderKanban();
+  showToast(`✅ ${count} historia${count>1?'s':''} asignada${count>1?'s':''} al Sprint 3`, 'success');
+}
+
+function openNewStoryModal() {
+  document.getElementById('new-story-modal').classList.add('open');
+}
+
+function closeNewModal(e) {
+  if (e.target === document.getElementById('new-story-modal')) {
+    document.getElementById('new-story-modal').classList.remove('open');
+  }
+}
+
+function createStory() {
+  const title = document.getElementById('new-title').value.trim();
+  if (!title) { showToast('El título es requerido','error'); return; }
+  const newId = 'US-' + (100 + BACKLOG_DATA.length + 1);
+  BACKLOG_DATA.unshift({
+    id: newId, title,
+    pts: parseInt(document.getElementById('new-pts').value),
+    moscow: document.getElementById('new-moscow').value,
+    module: document.getElementById('new-module').value,
+    assign: 'FG', status: 'backlog', due: '–',
+    desc: document.getElementById('new-desc').value || 'Sin descripción.',
+    nom: [], criteria: ['Por definir'], chat: []
+  });
+  document.getElementById('new-story-modal').classList.remove('open');
+  renderBacklog();
+  showToast(`✅ Historia ${newId} creada en el Backlog`, 'success');
+}
+
+// ══════════════════════════════════════════════════════════════
+//   KANBAN
+// ══════════════════════════════════════════════════════════════
+const COLUMNS = [
+  { id:'backlog', name:'Backlog', color:'#94a3b8' },
+  { id:'todo', name:'To Do', color:'#60a5fa' },
+  { id:'inprogress', name:'In Progress', color:'var(--gold)' },
+  { id:'review', name:'Review', color:'var(--cyan)' },
+  { id:'done', name:'Done', color:'var(--green)' },
+];
+
+function getAssignKeyForRole() {
+  // Map currentRole to assign key used in SPRINT_DATA
+  const map = { PO:'AT', SM:'FG', DEV:'MA', DIS:'LC', MED:'CR' };
+  return map[currentRole] || null;
+}
+
+function renderKanban() {
+  const board = document.getElementById('kanban-board');
+  const canSeeAll = (currentRole === 'PO' || currentRole === 'SM');
+  const myKey = getAssignKeyForRole();
+  board.innerHTML = COLUMNS.map(col => {
+    let cards = SPRINT_DATA.filter(t => t.col === col.id);
+    if (!canSeeAll && myKey) cards = cards.filter(t => t.assign === myKey || t.assign === currentRole);
+    return `
+      <div class="kanban-col">
+        <div class="col-header">
+          <span class="col-name" style="color:${col.color}">${col.name}</span>
+          <span class="col-count">${cards.length}</span>
+        </div>
+        <div class="col-body">
+          ${cards.map(t => renderTaskCard(t)).join('')}
+          ${col.id==='todo'?`<button class="btn btn-ghost btn-sm w-100" style="justify-content:center;margin-top:6px" onclick="showView('backlog',null);showToast('Selecciona historias del Backlog y usa Asignar al Sprint','info')">＋ Agregar</button>`:''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderTaskCard(t) {
+  return `
+    <div class="task-card${t.blocked?' blocked':''}" onclick="openModal('${t.id}','sprint')">
+      <div class="task-card-id">${t.id} · ${t.module}</div>
+      <div class="task-card-title">${t.title}</div>
+      ${t.blocked?`<div class="blocked-tag">⛔ BLOQUEADO</div>`:''}
+      <div class="task-card-footer">
+        <span class="task-pts-badge">${t.pts}p</span>
+        <div style="display:flex;align-items:center;gap:6px">
+          ${t.col!=='done'?`<button class="btn btn-red btn-xs" onclick="event.stopPropagation();returnTask('${t.id}')">↩ Error</button>`:''}
+          <div class="task-assignee">${t.assign}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function returnTask(id) {
+  const t = SPRINT_DATA.find(x => x.id === id);
+  if (!t) return;
+  t.col = 'backlog';
+  t.blocked = true;
+  renderKanban();
+  showToast(`⛔ ${id} devuelta al Backlog con bloqueo activo`, 'error');
+  // Also add to backlog data for visibility
+  if (!BACKLOG_DATA.find(b => b.id === id)) {
+    BACKLOG_DATA.unshift({ ...t, status: 'backlog' });
+    renderBacklog();
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//   MODAL
+// ══════════════════════════════════════════════════════════════
+const ASSIGN_NAMES = { FG:'F. González', MA:'M. García (Arch.)', AT:'A. Treviño', SM:'F. González', MG:'M. García', MC:'Dr. Consultor', LC:'L. Cruz', CR:'Dr. C. Ramírez' };
+
+function openModal(id, source) {
+  const data = source === 'sprint' ? SPRINT_DATA.find(t => t.id === id) : BACKLOG_DATA.find(t => t.id === id);
+  if (!data) return;
+
+  // Header
+  document.getElementById('modal-id').textContent = data.id + ' · ' + data.module;
+  document.getElementById('modal-title').textContent = data.title;
+
+  // Badges
+  const moscowClass = { MUST:'badge-must', SHOULD:'badge-should', COULD:'badge-could', WONT:'badge-wont' }[data.moscow];
+  document.getElementById('modal-badges').innerHTML = `
+    <span class="badge ${moscowClass}">${data.moscow}</span>
+    ${data.blocked ? '<span class="badge badge-red">⛔ Bloqueado</span>' : ''}
+  `;
+
+  // Meta strip
+  document.getElementById('modal-pts-new').textContent = data.pts + ' pts';
+  document.getElementById('modal-assign-av').textContent = data.assign;
+  document.getElementById('modal-assign-name').textContent = ASSIGN_NAMES[data.assign] || data.assign;
+  document.getElementById('modal-sprint-new').textContent = source === 'sprint' ? 'Sprint 3 (Activo)' : 'Backlog';
+  document.getElementById('modal-due-new').textContent = data.due || '—';
+
+  // Descripción
+  document.getElementById('modal-desc-new').textContent = data.desc;
+
+  // NOM
+  const nomSection = document.getElementById('modal-nom-section');
+  const nomList = document.getElementById('nom-items-new');
+  if (data.nom && data.nom.length) {
+    nomSection.style.display = '';
+    nomList.innerHTML = data.nom.map(n => {
+      const cls = n.ok === true ? 'nom-ok' : n.ok === false ? 'nom-fail' : 'nom-pend';
+      const icon = n.ok === true ? '✓' : n.ok === false ? '✗' : '…';
+      return `<div class="nom-item ${cls}"><span class="nom-icon">${icon}</span>${n.text}</div>`;
+    }).join('');
+  } else {
+    nomSection.style.display = 'none';
+  }
+
+  // Criterios
+  document.getElementById('modal-criteria-new').innerHTML = (data.criteria || []).map(c => `
+    <div class="criteria-item"><span class="criteria-dot"></span><span>${c}</span></div>`).join('');
+
+  // Chat
+  const chatEl = document.getElementById('modal-chat-new');
+  const initials = str => str.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  chatEl.innerHTML = (data.chat || []).length
+    ? data.chat.map(m => `
+        <div class="chat-bubble">
+          <div class="chat-av">${initials(m.who)}</div>
+          <div class="chat-content">
+            <div class="chat-header">
+              <span class="chat-author">${m.who}</span>
+              <span class="chat-time">${m.time}</span>
+            </div>
+            <div class="chat-text">${m.msg}</div>
+          </div>
+        </div>`).join('')
+    : '<div style="font-size:0.8rem;color:var(--text-dim);padding:4px 0">Sin comentarios todavía.</div>';
+
+  // Limpiar input del chat
+  const ci = document.getElementById('modal-chat-input');
+  if (ci) { ci.value = ''; ci.dataset.storyId = data.id; ci.dataset.source = source; }
+
+  // Actions
+  let actions = `<button class="btn btn-ghost" onclick="document.getElementById('task-modal').classList.remove('open')">Cerrar</button>`;
+  if (source === 'sprint') {
+    if (data.col !== 'done') {
+      actions += `<button class="btn btn-red" onclick="document.getElementById('task-modal').classList.remove('open');returnTask('${data.id}')">↩ Devolver por Error</button>`;
+      const nextNames = { backlog:'To Do', todo:'In Progress', inprogress:'Review', review:'Done' };
+      if (nextNames[data.col]) {
+        actions += `<button class="btn btn-primary" onclick="advanceTask('${data.id}');document.getElementById('task-modal').classList.remove('open')">→ Pasar a ${nextNames[data.col]}</button>`;
+      }
+    } else {
+      actions += `<span class="badge badge-green" style="padding:6px 14px;font-size:0.72rem">✅ Completada</span>`;
+    }
+  } else {
+    actions += `<button class="btn btn-primary" onclick="document.getElementById('task-modal').classList.remove('open');showView('backlog',null)">Agregar al Sprint</button>`;
+  }
+  document.getElementById('modal-actions').innerHTML = actions;
+
+  document.getElementById('task-modal').classList.add('open');
+}
+
+function sendModalComment() {
+  const input = document.getElementById('modal-chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const id = input.dataset.storyId;
+  const src = input.dataset.source;
+  const data = src === 'sprint' ? SPRINT_DATA.find(t => t.id === id) : BACKLOG_DATA.find(t => t.id === id);
+  if (!data) return;
+  const u = USERS[currentRole];
+  const now = new Date();
+  const time = `${now.getDate()} May, ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  data.chat.push({ who: u.name, msg, time });
+  input.value = '';
+  // re-render chat
+  openModal(id, src);
+}
+
+function advanceTask(id) {
+  const t = SPRINT_DATA.find(x => x.id === id);
+  if (!t) return;
+  const order = ['backlog','todo','inprogress','review','done'];
+  const idx = order.indexOf(t.col);
+  if (idx < order.length - 1) { t.col = order[idx + 1]; t.blocked = false; }
+  renderKanban();
+  const colNames = { todo:'To Do', inprogress:'In Progress', review:'Review', done:'✅ Done' };
+  showToast(`${id} movida a ${colNames[t.col]}`, 'success');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('task-modal')) {
+    document.getElementById('task-modal').classList.remove('open');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//   CALENDAR
+// ══════════════════════════════════════════════════════════════
+let calYear = 2026;
+let calMonth = 4; // 0-based: 4 = May
+
+// Base events keyed by "YYYY-MM-D"
+const CAL_EVENTS = {
+  '2026-4-1':  [{type:'green',text:'Sprint 3 Start'}],
+  '2026-4-5':  [{type:'cyan',text:'Planning S3'}],
+  '2026-4-6':  [{type:'gold',text:'Retrospectiva S2'}],
+  '2026-4-9':  [{type:'green',text:'US-040 ✅ OCI'}],
+  '2026-4-10': [{type:'green',text:'US-031 ✅ JWT'}],
+  '2026-4-11': [{type:'green',text:'US-032 ✅ DB'}],
+  '2026-4-13': [{type:'cyan',text:'Daily Sync'},{type:'red',text:'⚠ US-034 Bloq.'}],
+  '2026-4-14': [{type:'cyan',text:'Review: US-033'},{type:'cyan',text:'Review: US-042'}],
+  '2026-4-15': [{type:'gold',text:'Entrega: US-035'},{type:'gold',text:'Entrega: US-036'}],
+  '2026-4-16': [{type:'red',text:'⚠ Deadline FHIR'}],
+  '2026-4-17': [{type:'red',text:'⚠ US-038 Firma'}],
+  '2026-4-19': [{type:'gold',text:'Entrega: US-013'}],
+  '2026-4-20': [{type:'cyan',text:'Sprint Review S3'}],
+  '2026-4-21': [{type:'green',text:'Sprint S4 Start'}],
+  '2026-4-22': [{type:'gold',text:'Entrega: US-012'}],
+  '2026-4-26': [{type:'cyan',text:'Holiday 🇲🇽'}],
+  '2026-4-30': [{type:'green',text:'Sprint S4 Demo'}],
+  '2026-5-3':  [{type:'green',text:'Sprint S4 Planning'}],
+  '2026-5-10': [{type:'cyan',text:'Review Sprint 4'}],
+  '2026-5-18': [{type:'green',text:'Sprint S5 Start'}],
+  '2026-5-25': [{type:'gold',text:'Retrospectiva S4'}],
+};
+
+const MONTH_NAMES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function calPrevMonth() {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+function calNextMonth() {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar();
+}
+function calToday() {
+  calYear = 2026; calMonth = 4;
+  renderCalendar();
+}
+
+function addCalEvent() {
+  const day = parseInt(document.getElementById('cal-new-day').value);
+  const type = document.getElementById('cal-new-type').value;
+  const text = document.getElementById('cal-new-text').value.trim();
+  if (!day || !text) { showToast('Completa el día y la descripción','error'); return; }
+  const key = `${calYear}-${calMonth}-${day}`;
+  if (!CAL_EVENTS[key]) CAL_EVENTS[key] = [];
+  CAL_EVENTS[key].push({type, text});
+  document.getElementById('cal-new-day').value = '';
+  document.getElementById('cal-new-text').value = '';
+  renderCalendar();
+  showToast(`✅ Evento agregado el ${day} de ${MONTH_NAMES[calMonth]}`, 'success');
+}
+
+function renderCalendar() {
+  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const totalDays = new Date(calYear, calMonth + 1, 0).getDate();
+  const todayReal = (calYear === 2026 && calMonth === 4) ? 14 : -1;
+
+  // Update titles
+  const title = `Calendario · ${MONTH_NAMES[calMonth]} ${calYear}`;
+  const secTitle = document.getElementById('cal-section-title');
+  if (secTitle) secTitle.textContent = title;
+  const topTitle = document.getElementById('topbar-title');
+  if (topTitle && topTitle.textContent.startsWith('Calendario')) topTitle.textContent = title;
+
+  let html = `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div style="font-size:1rem;font-weight:800;color:var(--deep)">${MONTH_NAMES[calMonth]} ${calYear} · Ceremonias SCRUM & Entregas</div>
+  </div>`;
+  html += '<div class="cal-grid">';
+  days.forEach(d => { html += `<div class="cal-day-header">${d}</div>`; });
+
+  for (let i = 0; i < firstDay; i++) html += '<div class="cal-cell empty"></div>';
+
+  for (let d = 1; d <= totalDays; d++) {
+    const key = `${calYear}-${calMonth}-${d}`;
+    const dayEvents = CAL_EVENTS[key] || [];
+    const hasBlock = dayEvents.some(e => e.type === 'red');
+    const isToday = d === todayReal;
+    const eventsStr = dayEvents.length ? dayEvents.map(e=>e.text).join(', ') : 'Sin eventos';
+    html += `<div class="cal-cell${isToday?' today':''}${hasBlock?' has-block':''}" onclick="showToast('${d} ${MONTH_NAMES[calMonth]}: ${eventsStr.replace(/'/g,'`')}','info')">
+      <div class="cal-num">${d}${isToday?'<span class="cal-today-dot"></span>':''}</div>
+      ${dayEvents.slice(0,2).map(e => `<div class="cal-event cal-ev-${e.type}">${e.text}</div>`).join('')}
+      ${dayEvents.length > 2 ? `<div class="cal-ev-more">+${dayEvents.length-2} más</div>` : ''}
+    </div>`;
+  }
+  html += '</div>';
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════
+//   METRICS
+// ══════════════════════════════════════════════════════════════
+function renderMetrics() {
+  // Velocity bars
+  const sprints = [
+    {name:'S1', plan:25, real:22},
+    {name:'S2', plan:28, real:26},
+    {name:'S3', plan:32, real:34},
+    {name:'S4', plan:35, real:null},
+  ];
+  const velEl = document.getElementById('vel-bars');
+  const max = 40;
+  velEl.innerHTML = sprints.map(s => `
+    <div class="vel-bar-group">
+      <div class="vel-sprint">${s.name}</div>
+      <div class="vel-bars">
+        <div class="vel-bar planned" style="height:${Math.round((s.plan/max)*100)}px" title="${s.plan} planeados"></div>
+        ${s.real !== null ? `<div class="vel-bar actual" style="height:${Math.round((s.real/max)*100)}px" title="${s.real} real"></div>` : ''}
+      </div>
+      <div class="vel-label">${s.plan}/${s.real||'?'}</div>
+    </div>`).join('');
+
+  // Capacity chart
+  const team = [
+    {name:'F. González', cap:40, load:38},
+    {name:'M. García', cap:40, load:42},
+    {name:'Dev 3', cap:30, load:20},
+    {name:'Dev 4', cap:30, load:28},
+  ];
+  const capEl = document.getElementById('cap-chart');
+  capEl.innerHTML = team.map(m => `
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;font-weight:700;margin-bottom:4px">
+        <span>${m.name}</span>
+        <span style="color:${m.load>m.cap?'var(--red)':'var(--green)'}">${m.load}/${m.cap}h</span>
+      </div>
+      <div class="risk-bar" style="height:8px">
+        <div class="risk-fill" style="width:${Math.min(100,(m.load/m.cap)*100)}%;background:${m.load>m.cap?'var(--red)':'var(--cyan)'}"></div>
+      </div>
+    </div>`).join('');
+
+  // Status distribution
+  const cols = SPRINT_DATA.reduce((acc,t) => { acc[t.col] = (acc[t.col]||0)+1; return acc; }, {});
+  const colInfo = { backlog:{name:'Backlog',color:'var(--text-dim)'}, todo:{name:'To Do',color:'#60a5fa'}, inprogress:{name:'In Progress',color:'var(--gold)'}, review:{name:'Review',color:'var(--cyan)'}, done:{name:'Done',color:'var(--green)'} };
+  const total = SPRINT_DATA.length;
+  const distEl = document.getElementById('status-dist');
+  distEl.innerHTML = Object.entries(colInfo).map(([key,info]) => {
+    const count = cols[key] || 0;
+    const pct = Math.round((count/total)*100);
+    return `
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:0.72rem;font-weight:700;margin-bottom:4px">
+          <span>${info.name}</span><span style="color:${info.color}">${count} (${pct}%)</span>
+        </div>
+        <div class="risk-bar" style="height:8px">
+          <div class="risk-fill" style="width:${pct}%;background:${info.color}"></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+//   BURNDOWN CHART
+// ══════════════════════════════════════════════════════════════
+function drawBurndown(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 200 * dpr;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = '200px';
+  ctx.scale(dpr, dpr);
+
+  const W = rect.width, H = 200;
+  const pad = { t:20, r:20, b:40, l:44 };
+  const gW = W - pad.l - pad.r, gH = H - pad.t - pad.b;
+
+  // Data: 10 days of sprint, 34 pts total
+  const ideal = [34,30.6,27.2,23.8,20.4,17,13.6,10.2,6.8,3.4,0];
+  const actual = [34,33,30,28,24,22,18,14,null,null,null];
+  const maxPts = 36;
+  const days = ideal.length;
+
+  const xScale = (i) => pad.l + (i/(days-1)) * gW;
+  const yScale = (v) => pad.t + (1 - v/maxPts) * gH;
+
+  // Grid
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1;
+  for (let g = 0; g <= 4; g++) {
+    const y = yScale(g * (maxPts/4));
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l+gW, y); ctx.stroke();
+    ctx.fillStyle = '#94a3b8'; ctx.font = '10px DM Sans, sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(g*(maxPts/4)), pad.l-6, y+4);
+  }
+  for (let d = 0; d < days; d++) {
+    const x = xScale(d);
+    ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t+gH); ctx.stroke();
+    ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'center';
+    ctx.fillText('D'+(d+1), x, H-pad.b+16);
+  }
+
+  // Ideal line
+  ctx.beginPath(); ctx.setLineDash([6,4]);
+  ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5;
+  ideal.forEach((v,i) => i === 0 ? ctx.moveTo(xScale(i), yScale(v)) : ctx.lineTo(xScale(i), yScale(v)));
+  ctx.stroke(); ctx.setLineDash([]);
+
+  // Actual line
+  const filled = actual.filter(v => v !== null);
+  ctx.beginPath();
+  ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 2.5;
+  filled.forEach((v,i) => i === 0 ? ctx.moveTo(xScale(i), yScale(v)) : ctx.lineTo(xScale(i), yScale(v)));
+  ctx.stroke();
+
+  // Area
+  ctx.beginPath();
+  filled.forEach((v,i) => i === 0 ? ctx.moveTo(xScale(i), yScale(v)) : ctx.lineTo(xScale(i), yScale(v)));
+  ctx.lineTo(xScale(filled.length-1), yScale(0));
+  ctx.lineTo(xScale(0), yScale(0));
+  ctx.closePath();
+  const gradient = ctx.createLinearGradient(0, pad.t, 0, pad.t+gH);
+  gradient.addColorStop(0, 'rgba(6,182,212,0.25)');
+  gradient.addColorStop(1, 'rgba(6,182,212,0)');
+  ctx.fillStyle = gradient; ctx.fill();
+
+  // Dots
+  filled.forEach((v,i) => {
+    ctx.beginPath();
+    ctx.arc(xScale(i), yScale(v), 4, 0, Math.PI*2);
+    ctx.fillStyle = '#06b6d4'; ctx.fill();
+    ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+  });
+
+  // Labels
+  ctx.fillStyle = '#64748b'; ctx.font = '10px DM Sans, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('— Ideal', pad.l+4, pad.t+14);
+  ctx.fillStyle = '#06b6d4';
+  ctx.fillText('— Real', pad.l+52, pad.t+14);
+}
+
+
+// ══════════════════════════════════════════════════════════════
+//   TOAST
+// ══════════════════════════════════════════════════════════════
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  const icons = { success:'✅', error:'⛔', info:'ℹ️' };
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `${icons[type]||''} ${msg}`;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 4200);
+}
+
+// ══════════════════════════════════════════════════════════════
+//   KEYBOARD
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('task-modal').classList.remove('open');
+    document.getElementById('new-story-modal').classList.remove('open');
+  }
+});
+
+// Resize burndown on window resize
+window.addEventListener('resize', () => {
+  if (document.getElementById('view-dashboard').classList.contains('active')) drawBurndown('burndown-canvas');
+  if (document.getElementById('view-metrics').classList.contains('active')) drawBurndown('burndown2-canvas');
+});
+</script>
+</body>
+</html>
